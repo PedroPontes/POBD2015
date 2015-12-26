@@ -51,6 +51,8 @@ CMFCAppSdE2017Dlg::CMFCAppSdE2017Dlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CMFCAppSdE2017Dlg::IDD, pParent)
 	, studyroom(_T(""))
 	, building(_T(""))
+	, qlib(_T(""))
+	, library(FALSE)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -60,6 +62,7 @@ void CMFCAppSdE2017Dlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_EDITstudyroom, studyroom);
 	DDX_Text(pDX, IDC_EDITbuilding, building);
+	DDX_Check(pDX, IDC_CHECKLib, library);
 }
 
 BEGIN_MESSAGE_MAP(CMFCAppSdE2017Dlg, CDialogEx)
@@ -67,6 +70,8 @@ BEGIN_MESSAGE_MAP(CMFCAppSdE2017Dlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTONquery, &CMFCAppSdE2017Dlg::OnBnClickedButtonquery)
+	ON_BN_CLICKED(IDC_CHECKLib, &CMFCAppSdE2017Dlg::Librarybutton)
+	ON_EN_CHANGE(IDC_EDITstudyroom, &CMFCAppSdE2017Dlg::OnEnChangeEditstudyroom)
 END_MESSAGE_MAP()
 
 
@@ -162,6 +167,19 @@ void CMFCAppSdE2017Dlg::OnBnClickedButtonquery()
 	myconnectorclassDB MyConnection;
 	MyConnection.connect();
 	UpdateData(TRUE);
-	building = MyConnection.CheckBuilding(studyroom);
+	building = MyConnection.Search(qlib);
 	UpdateData(FALSE);
+}
+
+
+void CMFCAppSdE2017Dlg::Librarybutton()
+{
+	// TODO: Add your control notification handler code here;
+
+	if (library == TRUE){
+		qlib = _T(" and bibl= '1'");
+	}
+	else{
+		qlib = _T("");
+	}
 }
