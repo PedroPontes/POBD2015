@@ -50,8 +50,14 @@ END_MESSAGE_MAP()
 CMFCAppSdE2017Dlg::CMFCAppSdE2017Dlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CMFCAppSdE2017Dlg::IDD, pParent)
 	, building(_T(""))
-	, qlib(_T(""))
+	, qlib(_T(""))//Library query
+	, qsmall(_T(""))// Size query
+	, qmedium(_T(""))//  ''
+	, qlarge(_T(""))//   ''
 	, library(FALSE)
+	, isSmall(FALSE)
+	, isMedium(FALSE)
+	, isLarge(FALSE)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -61,6 +67,9 @@ void CMFCAppSdE2017Dlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_EDITbuilding, building);
 	DDX_Check(pDX, IDC_CHECKLib, library);
+	DDX_Check(pDX, IDC_CHECKsmall, isSmall);
+	DDX_Check(pDX, IDC_CHECKmedium, isMedium);
+	DDX_Check(pDX, IDC_CHECKLarge, isLarge);
 }
 
 BEGIN_MESSAGE_MAP(CMFCAppSdE2017Dlg, CDialogEx)
@@ -69,6 +78,9 @@ BEGIN_MESSAGE_MAP(CMFCAppSdE2017Dlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTONquery, &CMFCAppSdE2017Dlg::OnBnClickedButtonquery)
 	ON_BN_CLICKED(IDC_CHECKLib, &CMFCAppSdE2017Dlg::Librarybutton)
+	ON_BN_CLICKED(IDC_CHECKsmall, &CMFCAppSdE2017Dlg::SizeSmall)
+	ON_BN_CLICKED(IDC_CHECKmedium, &CMFCAppSdE2017Dlg::SizeMedium)
+	ON_BN_CLICKED(IDC_CHECKLarge, &CMFCAppSdE2017Dlg::SizeLarge)
 END_MESSAGE_MAP()
 
 
@@ -164,7 +176,22 @@ void CMFCAppSdE2017Dlg::OnBnClickedButtonquery()
 	myconnectorclassDB MyConnection;
 	MyConnection.connect();
 	UpdateData(TRUE);
-	building = MyConnection.Search(qlib);
+	CString qsize;
+
+	if((isSmall && isMedium && isLarge) || (!isSmall && !isMedium && !isLarge))
+	{
+		qsize = _T("");
+	}
+	else if (isSmall && (isMedium || isLarge )){
+		qsize = _T(" and (") + qsmall + _T(" or") + qmedium + qlarge + _T(")");
+	}
+	else if (isLarge && isMedium){
+		qsize = _T(" and (") + qlarge + _T(" or") + qmedium + _T(")");
+	}
+	else{
+		qsize = _T(" and") + qsmall + qmedium + qlarge;
+	}
+	building = MyConnection.Search(qlib+qsize);
 	UpdateData(FALSE);
 }
 
@@ -174,9 +201,48 @@ void CMFCAppSdE2017Dlg::Librarybutton()
 	// TODO: Add your control notification handler code here;
 	UpdateData(TRUE);
 	if (library == TRUE){
-		qlib = _T(" and bibl= '1'");
+		qlib = _T(" and studyroom.bibl= '1'");
 	}
 	else{
 		qlib = _T("");
+	}
+}
+
+
+void CMFCAppSdE2017Dlg::SizeSmall()
+{
+	// TODO: Add your control notification handler code here
+	UpdateData(TRUE);
+	if (isSmall == TRUE){
+		qsmall = _T(" studyroom.chairs< '35'");
+	}
+	else{
+		qsmall = _T("");
+	}
+}
+
+
+void CMFCAppSdE2017Dlg::SizeMedium()
+{
+	// TODO: Add your control notification handler code here
+	UpdateData(TRUE);
+	if (isMedium == TRUE){
+		qmedium = _T(" (studyroom.chairs<= '55' and studyroom.chairs> '35')");
+	}
+	else{
+		qmedium = _T("");
+	}
+}
+
+
+void CMFCAppSdE2017Dlg::SizeLarge()
+{
+	// TODO: Add your control notification handler code here
+	UpdateData(TRUE);
+	if (isLarge == TRUE){
+		qlarge = _T(" studyroom.chairs> '55'");
+	}
+	else{
+		qlarge = _T("");
 	}
 }

@@ -35,4 +35,14 @@ public:
 	afx_msg void Librarybutton();
 	BOOL library;
 	CString qlib;
+	CString qsmall;
+	CString qmedium;
+	CString qlarge;
+	afx_msg void SizeSmall();
+	BOOL isSmall;
+	afx_msg void SizeMedium();
+	BOOL isMedium;
+	afx_msg void SizeLarge();
+	BOOL isLarge;
+	afx_msg void OnLvnItemchangedList4(NMHDR *pNMHDR, LRESULT *pResult);
 };

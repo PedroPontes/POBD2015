@@ -29,10 +29,10 @@ void myconnectorclassDB::connect()
 	}
 }
 
-CString myconnectorclassDB::Search(CString qlib)
+CString myconnectorclassDB::Search(CString param)
 {
 	CString value ;
-	CString query = _T("SELECT studyroom.roomID FROM studyroom WHERE studyroom.roomID< '1000'")+qlib;
+	CString query = _T("SELECT studyroom.roomID FROM studyroom WHERE studyroom.roomID< '1000'")+param;
 
 	Query(query);
 	/*while ((row = mysql_fetch_row(result)) != NULL)
