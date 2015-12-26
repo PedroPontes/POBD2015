@@ -31,10 +31,8 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedButtonquery();
-	CString studyroom;
 	CString building;
 	afx_msg void Librarybutton();
-	afx_msg void OnEnChangeEditstudyroom();
 	BOOL library;
 	CString qlib;
 };

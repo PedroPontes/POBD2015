@@ -35,10 +35,12 @@ CString myconnectorclassDB::Search(CString qlib)
 	CString query = _T("SELECT studyroom.roomID FROM studyroom WHERE studyroom.roomID< '1000'")+qlib;
 
 	Query(query);
-	while ((row = mysql_fetch_row(result)) != NULL)
+	/*while ((row = mysql_fetch_row(result)) != NULL)
 	{
 		value = CPtoUnicode(row[0], 1251);
-	}
+	}*/
+	row = mysql_fetch_row(result);
+	value = CPtoUnicode(row[0], 1251);
 	return value;
 }
 void myconnectorclassDB::Query(CString query)
