@@ -38,6 +38,8 @@ public:
 	CString qsmall;
 	CString qmedium;
 	CString qlarge;
+	CString qOpen;
+	CString qOpenFrom;
 	afx_msg void SizeSmall();
 	BOOL isSmall;
 	afx_msg void SizeMedium();
@@ -45,4 +47,6 @@ public:
 	afx_msg void SizeLarge();
 	BOOL isLarge;
 	afx_msg void OnLvnItemchangedList4(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void CheckOpen();
+	BOOL isOpen;
 };

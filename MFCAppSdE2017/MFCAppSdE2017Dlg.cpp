@@ -6,6 +6,7 @@
 #include "MFCAppSdE2017.h"
 #include "MFCAppSdE2017Dlg.h"
 #include "afxdialogex.h"
+#include "ctime"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -54,10 +55,13 @@ CMFCAppSdE2017Dlg::CMFCAppSdE2017Dlg(CWnd* pParent /*=NULL*/)
 	, qsmall(_T(""))// Size query
 	, qmedium(_T(""))//  ''
 	, qlarge(_T(""))//   ''
+	, qOpen(_T(""))// query open
+	, qOpenFrom(_T(""))// query open From
 	, library(FALSE)
 	, isSmall(FALSE)
 	, isMedium(FALSE)
 	, isLarge(FALSE)
+	, isOpen(FALSE)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -70,6 +74,7 @@ void CMFCAppSdE2017Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHECKsmall, isSmall);
 	DDX_Check(pDX, IDC_CHECKmedium, isMedium);
 	DDX_Check(pDX, IDC_CHECKLarge, isLarge);
+	DDX_Check(pDX, IDC_CHECKOpen, isOpen);
 }
 
 BEGIN_MESSAGE_MAP(CMFCAppSdE2017Dlg, CDialogEx)
@@ -81,6 +86,7 @@ BEGIN_MESSAGE_MAP(CMFCAppSdE2017Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_CHECKsmall, &CMFCAppSdE2017Dlg::SizeSmall)
 	ON_BN_CLICKED(IDC_CHECKmedium, &CMFCAppSdE2017Dlg::SizeMedium)
 	ON_BN_CLICKED(IDC_CHECKLarge, &CMFCAppSdE2017Dlg::SizeLarge)
+	ON_BN_CLICKED(IDC_CHECKOpen, &CMFCAppSdE2017Dlg::CheckOpen)
 END_MESSAGE_MAP()
 
 
@@ -191,7 +197,7 @@ void CMFCAppSdE2017Dlg::OnBnClickedButtonquery()
 	else{
 		qsize = _T(" and") + qsmall + qmedium + qlarge;
 	}
-	building = MyConnection.Search(qlib+qsize);
+	building = MyConnection.Search(qlib+qsize+qOpen,qOpenFrom);
 	UpdateData(FALSE);
 }
 
@@ -244,5 +250,27 @@ void CMFCAppSdE2017Dlg::SizeLarge()
 	}
 	else{
 		qlarge = _T("");
+	}
+}
+
+void CMFCAppSdE2017Dlg::CheckOpen()
+{
+	UpdateData(TRUE);
+	time_t t = time(0);   // get time now
+	struct tm now;
+	localtime_s(&now,&t);
+	CString hour;
+	hour.Format(_T("%d"), now.tm_hour);
+	CString wday;
+	wday.Format(_T("%d"), now.tm_wday);
+	if (isOpen) {
+		qOpenFrom = _T(", opens, schedules");
+		qOpen = _T(" and studyroom.roomID= opens.roomID and opens.scheduleID= schedules.scheduleID and schedules.oTime<= '") + hour
+			+ _T("' and schedules.cTime>= '") + hour + _T("' and schedules.startDay<= '") + wday +
+			_T("' and schedules.endDay>= '") + wday + _T("'");
+	}
+	else{
+		qOpenFrom = _T("");
+		qOpen = _T("");
 	}
 }
