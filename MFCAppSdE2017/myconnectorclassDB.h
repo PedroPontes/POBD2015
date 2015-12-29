@@ -23,7 +23,7 @@ public:
 	CString CPtoUnicode(const char* CPString, UINT CodePage);
 	// Converts data from MySQL format to MFC's CString.
 	// My Queries
-	CString Search(CString param, CString fromparam);
+	CString Search(CString sentence);
 	myconnectorclassDB(void);
 
 	virtual ~myconnectorclassDB(void);
