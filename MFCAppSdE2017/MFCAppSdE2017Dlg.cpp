@@ -355,10 +355,10 @@ void CMFCAppSdE2017Dlg::OnBnClickedCheckplugB()
 	UpdateData(TRUE);
 }
 
-CString Bule2String(BOOL boolean)
+CString CMFCAppSdE2017Dlg::Bule2String(BOOL booleano)
 {
 	CString newstring;
-	if (boolean){
+	if (booleano){
 		newstring = _T("1");
 	}
 	else{

@@ -65,4 +65,6 @@ public:
 	afx_msg void OnBnClickedCheckplugB();
 	BOOL plugG;
 	BOOL plugB;
+
+	CString Bule2String(BOOL booleano);
 };
