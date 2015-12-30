@@ -366,3 +366,4 @@ CString Bule2String(BOOL boolean)
 	}
 	return newstring;
 }
+//vlhblah
