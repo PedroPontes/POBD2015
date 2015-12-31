@@ -29,4 +29,5 @@ public:
 	CString Register(CString regName, CString regEmail, CString regPass, CString regUser);
 	virtual ~myconnectorclassDB(void);
 	BOOL deleteUser(CString useID);
+	CString addBuilding(CString build, CString lat, CString lng, CString buildtype, CString address)
 };

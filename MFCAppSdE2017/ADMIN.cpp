@@ -106,5 +106,29 @@ void CADMIN::OnEnChangelongedit()
 
 void CADMIN::OnBnClickedButton3()
 {
-	// TODO: Add your control notification handler code here QUUUUUUEEEERYYYYY
+	UpdateData(TRUE);
+	CString message;
+
+	if (buildName.IsEmpty() || buildType.IsEmpty() || buildLat.IsEmpty() || buildLong.IsEmpty() || buildAdd.IsEmpty()){ //check if the register is complete before
+		message.Format(_T("Please fill every field before proceeding"));//////////////sending the query
+		AfxMessageBox(message);
+	}
+	else{
+		myconnectorclassDB MyConnection;
+		MyConnection.connect();
+		UpdateData(TRUE);
+		CString retBuild = MyConnection.addBuilding(buildName,buildLat,buildLong,buildType,buildAdd);
+		BOOL aux = 1;
+		// The command mysql_real_connect is included in the libraries
+
+		if (retBuild.IsEmpty()){
+			message.Format(_T("Building Added"));
+			AfxMessageBox(message);
+		}
+		else{
+			message.Format(_T("Building ") + retBuild + _T(" already exists. Try Again."));///check if user is avaiable
+			AfxMessageBox(message);
+		}
+	}
+	UpdateData(FALSE);
 }

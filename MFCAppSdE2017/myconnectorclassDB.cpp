@@ -28,6 +28,18 @@ void myconnectorclassDB::connect()
 		AfxMessageBox(message);
 	}*/
 }
+CString myconnectorclassDB::addBuilding(CString build, CString lat, CString lng, CString buildtype, CString address)
+{
+	BOOL aux = FALSE;
+	CString value;
+	CString query = _T("CALL addBuilding('") + build + _T("','") + lat + _T("','") + lng + _T("','")
+		+ buildtype + _T("','") + address+ _T("')");
+	Query(query);
+	row = mysql_fetch_row(result);
+	value = CPtoUnicode(row[0], 1251);
+	return value;
+}
+
 
 BOOL myconnectorclassDB::Login(CString username, CString password)
 {
