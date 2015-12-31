@@ -53,18 +53,19 @@ void CRegister::OnBnClickedRegisterbutt()
 	UpdateData(TRUE);
 	CString message;
 	
-	if (regName.IsEmpty || regEmail.IsEmpty || regPass.IsEmpty || regUser.IsEmpty){ //check if the register is complete before
+	if (regName.IsEmpty() || regEmail.IsEmpty() || regPass.IsEmpty() || regUser.IsEmpty()){ //check if the register is complete before
 		message.Format(_T("Please fill every field before proceeding"));//////////////sending the query
 		AfxMessageBox(message);
 	}
 	else{
 		myconnectorclassDB MyConnection;
 		MyConnection.connect();
+		UpdateData(TRUE);
 		CString retUser = MyConnection.Register(regName, regEmail, regPass, regUser);
-
+		BOOL aux = 1;
 		// The command mysql_real_connect is included in the libraries
 
-		if (retUser.IsEmpty){
+		if (retUser.IsEmpty()){
 			message.Format(_T("Account Created! Welcome."));
 			AfxMessageBox(message);
 			EndDialog(1);

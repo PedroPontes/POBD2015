@@ -103,6 +103,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ADMIN.h" />
     <ClInclude Include="LoginDIALOG.h" />
     <ClInclude Include="MFCAppSdE2017.h" />
     <ClInclude Include="MFCAppSdE2017Dlg.h" />
@@ -113,6 +114,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ADMIN.cpp" />
     <ClCompile Include="LoginDIALOG.cpp" />
     <ClCompile Include="MFCAppSdE2017.cpp" />
     <ClCompile Include="MFCAppSdE2017Dlg.cpp" />

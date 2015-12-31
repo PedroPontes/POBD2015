@@ -28,4 +28,5 @@ public:
 	myconnectorclassDB(void);
 	CString Register(CString regName, CString regEmail, CString regPass, CString regUser);
 	virtual ~myconnectorclassDB(void);
+	BOOL deleteUser(CString useID);
 };

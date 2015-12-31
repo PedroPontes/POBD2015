@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include "afxwin.h"
 
 
 // CMFCAppSdE2017Dlg dialog
@@ -70,4 +71,8 @@ public:
 	afx_msg void OnBnClickedLoginbutton();
 	afx_msg void OnEnChangeLoginstate();
 	CString LoginStateMsg;
+	CStatic * m_label;
+	afx_msg void OnBnClickedLogoutbutton();
+	BOOL logstate;
+	afx_msg void OnBnClickedAdmincpButton();
 };

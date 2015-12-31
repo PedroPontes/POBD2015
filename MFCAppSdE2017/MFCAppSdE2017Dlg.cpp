@@ -8,6 +8,7 @@
 #include "afxdialogex.h"
 #include "ctime"
 #include "LoginDIALOG.h"
+#include "ADMIN.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -94,6 +95,7 @@ void CMFCAppSdE2017Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHECKPlugB, plugB);
 	DDX_Check(pDX, IDC_CHECKPlugG, plugG);
 	DDX_Text(pDX, IDC_LoginState, LoginStateMsg);
+	//DDX_Control(pDX, IDC_STATIC_1, *m_label);
 }
 
 BEGIN_MESSAGE_MAP(CMFCAppSdE2017Dlg, CDialogEx)
@@ -118,6 +120,8 @@ BEGIN_MESSAGE_MAP(CMFCAppSdE2017Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_CHECKPlugB, &CMFCAppSdE2017Dlg::OnBnClickedCheckplugB)
 	ON_BN_CLICKED(IDC_LoginBUTTON, &CMFCAppSdE2017Dlg::OnBnClickedLoginbutton)
 	ON_EN_CHANGE(IDC_LoginState, &CMFCAppSdE2017Dlg::OnEnChangeLoginstate)
+	ON_BN_CLICKED(IDC_LogoutBUTTON, &CMFCAppSdE2017Dlg::OnBnClickedLogoutbutton)
+	ON_BN_CLICKED(IDC_AdminCP_BUTTON, &CMFCAppSdE2017Dlg::OnBnClickedAdmincpButton)
 END_MESSAGE_MAP()
 
 
@@ -153,6 +157,10 @@ BOOL CMFCAppSdE2017Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	// TODO: Add extra initialization here
+	CFont *m_Font1 = new CFont;
+	m_Font1->CreatePointFont(120, _T("Arial Black"));
+	m_label = (CStatic *)GetDlgItem(IDC_STATIC_1);
+	m_label->SetFont(m_Font1);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -378,9 +386,9 @@ void CMFCAppSdE2017Dlg::OnBnClickedLoginbutton()
 	UpdateData(TRUE);
 	CLoginDIALOG ldlg;
 	ldlg.DoModal();
-	BOOL aux1 = ldlg.GetLoginState();
+	logstate= ldlg.GetLoginState();
 	CString username = ldlg.GetUser();
-	if (!aux1){
+	if (!logstate){
 		username = _T("Guest");
 	}
 	LoginStateMsg = _T("Logged in as ") + username;
@@ -391,4 +399,22 @@ void CMFCAppSdE2017Dlg::OnBnClickedLoginbutton()
 void CMFCAppSdE2017Dlg::OnEnChangeLoginstate()
 {
 	UpdateData(TRUE);
+}
+
+
+void CMFCAppSdE2017Dlg::OnBnClickedLogoutbutton()
+{
+	UpdateData(TRUE);
+	logstate = 0;
+	CString username = _T("Guest");
+	LoginStateMsg = _T("Logged in as ") + username;
+	UpdateData(FALSE);
+}
+
+
+void CMFCAppSdE2017Dlg::OnBnClickedAdmincpButton()
+{
+	// TODO: Add your control notification handler code here
+	CADMIN Admin;
+	Admin.DoModal();
 }

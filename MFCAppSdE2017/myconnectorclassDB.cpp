@@ -16,7 +16,7 @@ void myconnectorclassDB::connect()
 	connection = mysql_init(NULL); // Initialise the instance
 	connection = mysql_real_connect(connection, SERVER, USER,
 		PASSWORD, DATABASE, 0, NULL, 0);
-	CString message;
+	/*CString message;
 	// The command mysql_real_connect is included in the libraries
 	if (connection==NULL){
 		// Adddebugcode here
@@ -26,19 +26,19 @@ void myconnectorclassDB::connect()
 	else{
 		message.Format(_T("Connection Successful"));
 		AfxMessageBox(message);
-	}
+	}*/
 }
 
 BOOL myconnectorclassDB::Login(CString username, CString password)
 {
-	BOOL aux=FALSE;
 	CString value;
-	CString query = _T("SELECT pass FROM users WHERE username= '") + username + _T("'");
+	CString query = _T("CALL login('") + username + _T("','") + password + _T("')");
 	Query(query);
 	row = mysql_fetch_row(result);
 	value = CPtoUnicode(row[0], 1251);
-	if (value==password){
-		aux = TRUE;
+	BOOL aux;
+	if (value = '1'){
+		aux = 1;
 	}
 	return aux;
 }
@@ -47,14 +47,15 @@ CString myconnectorclassDB::Register(CString regName, CString regEmail, CString 
 {
 	BOOL aux = FALSE;
 	CString value;
-	CString query = _T("CALL register(") + regName + _T(",") + regEmail + _T(",") + regPass + _T(",") + regUser + _T(")");
+	CString query = _T("CALL register('") + regName + _T("','") + regEmail + _T("','") + regPass + _T("','")
+		+ regUser + _T("')");
 	Query(query);
 	row = mysql_fetch_row(result);
 	value = CPtoUnicode(row[0], 1251);
 	return value;
 }
 
-CString myconnectorclassDB::Search(CString sentence)
+CString myconnectorclassDB::Search(CString sentence)/////// MAIN SEARCH FUNCTION
 {
 	CString value ;
 	CString query = _T("CALL search(")+sentence+_T(")");
@@ -67,6 +68,19 @@ CString myconnectorclassDB::Search(CString sentence)
 	row = mysql_fetch_row(result);
 	value = CPtoUnicode(row[0], 1251);
 	return value;
+}
+
+BOOL myconnectorclassDB::deleteUser(CString useID)/////// DELETE USER FUNCTION ADMIN
+{
+	CString query = _T("CALL deleteUser('") + useID + _T("')");
+	Query(query);
+	row = mysql_fetch_row(result);
+	CString value = CPtoUnicode(row[0], 1251);
+	BOOL aux;
+	if (value = '1'){
+		aux = 1;
+	}
+	return aux;
 }
 void myconnectorclassDB::Query(CString query)
 {
