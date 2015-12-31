@@ -24,7 +24,8 @@ public:
 	// Converts data from MySQL format to MFC's CString.
 	// My Queries
 	CString Search(CString sentence);
+	BOOL Login(CString username, CString password);
 	myconnectorclassDB(void);
-
+	CString Register(CString regName, CString regEmail, CString regPass, CString regUser);
 	virtual ~myconnectorclassDB(void);
 };

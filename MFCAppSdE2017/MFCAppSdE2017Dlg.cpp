@@ -7,6 +7,7 @@
 #include "MFCAppSdE2017Dlg.h"
 #include "afxdialogex.h"
 #include "ctime"
+#include "LoginDIALOG.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -66,6 +67,7 @@ CMFCAppSdE2017Dlg::CMFCAppSdE2017Dlg(CWnd* pParent /*=NULL*/)
 	, isBest(FALSE)
 	, plugG(FALSE)
 	, plugB(FALSE)
+	, LoginStateMsg(_T("Logged in as Guest"))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -91,6 +93,7 @@ void CMFCAppSdE2017Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHECKBest, isBest);
 	DDX_Check(pDX, IDC_CHECKPlugB, plugB);
 	DDX_Check(pDX, IDC_CHECKPlugG, plugG);
+	DDX_Text(pDX, IDC_LoginState, LoginStateMsg);
 }
 
 BEGIN_MESSAGE_MAP(CMFCAppSdE2017Dlg, CDialogEx)
@@ -113,6 +116,8 @@ BEGIN_MESSAGE_MAP(CMFCAppSdE2017Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_CHECKBest, &CMFCAppSdE2017Dlg::OnBnClickedCheckbest)
 	ON_BN_CLICKED(IDC_CHECKPlugG, &CMFCAppSdE2017Dlg::OnBnClickedCheckplugG)
 	ON_BN_CLICKED(IDC_CHECKPlugB, &CMFCAppSdE2017Dlg::OnBnClickedCheckplugB)
+	ON_BN_CLICKED(IDC_LoginBUTTON, &CMFCAppSdE2017Dlg::OnBnClickedLoginbutton)
+	ON_EN_CHANGE(IDC_LoginState, &CMFCAppSdE2017Dlg::OnEnChangeLoginstate)
 END_MESSAGE_MAP()
 
 
@@ -237,10 +242,10 @@ void CMFCAppSdE2017Dlg::OnBnClickedButtonquery()
 	/////END///////PLUGS///VVVV//////
 	CString minPlugs;
 	if (plugG){
-		minPlugs = _T("0.5");
+		minPlugs = _T("7");
 	}
 	else if (plugB && !plugG){
-		minPlugs = _T("0.75");
+		minPlugs = _T("10");
 	}
 	else {
 		minPlugs = _T("0");
@@ -365,4 +370,25 @@ CString CMFCAppSdE2017Dlg::Bule2String(BOOL booleano)
 		newstring = _T("0");
 	}
 	return newstring;
+}
+
+void CMFCAppSdE2017Dlg::OnBnClickedLoginbutton()
+{
+	// TODO: Add your control notification handler code here
+	UpdateData(TRUE);
+	CLoginDIALOG ldlg;
+	ldlg.DoModal();
+	BOOL aux1 = ldlg.GetLoginState();
+	CString username = ldlg.GetUser();
+	if (!aux1){
+		username = _T("Guest");
+	}
+	LoginStateMsg = _T("Logged in as ") + username;
+	UpdateData(FALSE);
+}
+
+
+void CMFCAppSdE2017Dlg::OnEnChangeLoginstate()
+{
+	UpdateData(TRUE);
 }

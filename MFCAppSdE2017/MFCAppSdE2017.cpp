@@ -99,4 +99,3 @@ BOOL CMFCAppSdE2017App::InitInstance()
 	//  application, rather than start the application's message pump.
 	return FALSE;
 }
-

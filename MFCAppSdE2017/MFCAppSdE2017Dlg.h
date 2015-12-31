@@ -67,4 +67,7 @@ public:
 	BOOL plugB;
 
 	CString Bule2String(BOOL booleano);
+	afx_msg void OnBnClickedLoginbutton();
+	afx_msg void OnEnChangeLoginstate();
+	CString LoginStateMsg;
 };

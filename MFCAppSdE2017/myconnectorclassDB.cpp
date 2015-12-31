@@ -29,6 +29,31 @@ void myconnectorclassDB::connect()
 	}
 }
 
+BOOL myconnectorclassDB::Login(CString username, CString password)
+{
+	BOOL aux=FALSE;
+	CString value;
+	CString query = _T("SELECT pass FROM users WHERE username= '") + username + _T("'");
+	Query(query);
+	row = mysql_fetch_row(result);
+	value = CPtoUnicode(row[0], 1251);
+	if (value==password){
+		aux = TRUE;
+	}
+	return aux;
+}
+
+CString myconnectorclassDB::Register(CString regName, CString regEmail, CString regPass, CString regUser)
+{
+	BOOL aux = FALSE;
+	CString value;
+	CString query = _T("CALL register(") + regName + _T(",") + regEmail + _T(",") + regPass + _T(",") + regUser + _T(")");
+	Query(query);
+	row = mysql_fetch_row(result);
+	value = CPtoUnicode(row[0], 1251);
+	return value;
+}
+
 CString myconnectorclassDB::Search(CString sentence)
 {
 	CString value ;
