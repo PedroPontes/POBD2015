@@ -14,6 +14,11 @@ IMPLEMENT_DYNAMIC(CADMIN, CDialog)
 CADMIN::CADMIN(CWnd* pParent /*=NULL*/)
 	: CDialog(CADMIN::IDD, pParent)
 	, userIDdel(_T(""))
+	, buildName(_T(""))
+	, buildType(_T(""))
+	, buildLat(_T(""))
+	, buildLong(_T(""))
+	, buildAdd(_T(""))
 {
 
 }
@@ -26,12 +31,23 @@ void CADMIN::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_EDIT_DelUser, userIDdel);
+	DDX_Text(pDX, IDC_buildNameEDIT, buildName);
+	DDX_Text(pDX, IDC_typeBuildEDIT, buildType);
+	DDX_Text(pDX, IDC_latEDIT, buildLat);
+	DDX_Text(pDX, IDC_longEDIT, buildLong);
+	DDX_Text(pDX, IDC_addressEDIT, buildAdd);
 }
 
 
 BEGIN_MESSAGE_MAP(CADMIN, CDialog)
 	ON_EN_CHANGE(IDC_EDIT_DelUser, &CADMIN::OnEnChangeEditDeluser)
 	ON_BN_CLICKED(IDC_BUTTON_DelUser, &CADMIN::OnBnClickedButtonDeluser)
+	ON_EN_CHANGE(IDC_buildNameEDIT, &CADMIN::OnEnChangebuildnameedit)
+	ON_EN_CHANGE(IDC_typeBuildEDIT, &CADMIN::OnEnChangetypebuildedit)
+	ON_EN_CHANGE(IDC_addressEDIT, &CADMIN::OnEnChangeaddressedit)
+	ON_EN_CHANGE(IDC_latEDIT, &CADMIN::OnEnChangelatedit)
+	ON_EN_CHANGE(IDC_longEDIT, &CADMIN::OnEnChangelongedit)
+	ON_BN_CLICKED(IDC_BUTTON3, &CADMIN::OnBnClickedButton3)
 END_MESSAGE_MAP()
 
 
@@ -51,7 +67,7 @@ void CADMIN::OnBnClickedButtonDeluser()
 	MyConnection.connect();
 	CString message;
 	BOOL aux = MyConnection.deleteUser(userIDdel);
-	if (!aux){
+	if (aux==0){
 		message.Format(_T("User not Found!"));
 		AfxMessageBox(message);
 	}
@@ -60,4 +76,35 @@ void CADMIN::OnBnClickedButtonDeluser()
 		AfxMessageBox(message);
 	}
 
+}
+
+void CADMIN::OnEnChangebuildnameedit()
+{
+	UpdateData(TRUE);
+}
+
+void CADMIN::OnEnChangetypebuildedit()
+{
+	UpdateData(TRUE);
+}
+
+void CADMIN::OnEnChangeaddressedit()
+{
+	UpdateData(TRUE);
+}
+
+void CADMIN::OnEnChangelatedit()
+{
+	UpdateData(TRUE);
+}
+
+void CADMIN::OnEnChangelongedit()
+{
+	UpdateData(TRUE);
+}
+
+
+void CADMIN::OnBnClickedButton3()
+{
+	// TODO: Add your control notification handler code here QUUUUUUEEEERYYYYY
 }

@@ -36,8 +36,8 @@ BOOL myconnectorclassDB::Login(CString username, CString password)
 	Query(query);
 	row = mysql_fetch_row(result);
 	value = CPtoUnicode(row[0], 1251);
-	BOOL aux;
-	if (value = '1'){
+	BOOL aux = 0;
+	if (value == '1'){
 		aux = 1;
 	}
 	return aux;
@@ -76,8 +76,8 @@ BOOL myconnectorclassDB::deleteUser(CString useID)/////// DELETE USER FUNCTION A
 	Query(query);
 	row = mysql_fetch_row(result);
 	CString value = CPtoUnicode(row[0], 1251);
-	BOOL aux;
-	if (value = '1'){
+	BOOL aux=0;
+	if (value == '1'){
 		aux = 1;
 	}
 	return aux;

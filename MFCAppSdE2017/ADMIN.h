@@ -22,4 +22,15 @@ public:
 	CString userIDdel;
 	afx_msg void OnEnChangeEditDeluser();
 	afx_msg void OnBnClickedButtonDeluser();
+	afx_msg void OnEnChangebuildnameedit();
+	afx_msg void OnEnChangetypebuildedit();
+	afx_msg void OnEnChangeaddressedit();
+	afx_msg void OnEnChangelatedit();
+	afx_msg void OnEnChangelongedit();
+	afx_msg void OnBnClickedButton3();
+	CString buildName;
+	CString buildType;
+	CString buildLat;
+	CString buildLong;
+	CString buildAdd;
 };
