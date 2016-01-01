@@ -79,19 +79,40 @@ CString myconnectorclassDB::Register(CString regName, CString regEmail, CString 
 	return value;
 }
 
-CString myconnectorclassDB::Search(CString sentence)/////// MAIN SEARCH FUNCTION
+std::vector<LVITEM> myconnectorclassDB::Search(CString sentence)/////// MAIN SEARCH FUNCTION
 {
-	CString value ;
 	CString query = _T("CALL search(")+sentence+_T(")");
-
+	std::vector<LVITEM> search_results;
 	Query(query);
-	/*while ((row = mysql_fetch_row(result)) != NULL)
+
+	int line = 0;
+	int value_index = 0;
+	while ((row = mysql_fetch_row(result)) != NULL)
 	{
-		value = CPtoUnicode(row[0], 1251);
-	}*/
-	row = mysql_fetch_row(result);
-	value = CPtoUnicode(row[0], 1251);
-	return value;
+		int column[] = { 3, 2 }; // column selection
+		int ncolumns = 2;
+		for (int i = 0; i < ncolumns; i++)
+		{
+			query_disp_value[value_index] = CPtoUnicode(row[column[i]], 1251);
+			// Use the LV_ITEM structure to insert the items
+			LVITEM lvi;
+			// Insert the first item
+			lvi.mask = LVIF_TEXT;
+			lvi.iItem = line; // line where this result will be displayed
+			lvi.iSubItem = i; // column where this result will be displayed
+			int length = 1024;
+			LPWSTR pwsz = query_disp_value[value_index].GetBuffer(length);
+			// do something with the string that pwsz points to.
+			lvi.pszText = pwsz;
+			query_disp_value[value_index].ReleaseBuffer();
+			
+			search_results.push_back(lvi); // insert new structure in the vector
+			value_index++;
+		}
+		line++;
+	}
+
+	return search_results;
 }
 
 BOOL myconnectorclassDB::deleteUser(CString useID)/////// DELETE USER FUNCTION ADMIN

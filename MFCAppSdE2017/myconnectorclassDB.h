@@ -1,6 +1,8 @@
 #pragma once
 #include"my_global.h" // The included headers we need
 #include"mysql.h"
+#include <vector>
+
 class myconnectorclassDB
 {
 private:
@@ -23,7 +25,7 @@ public:
 	CString CPtoUnicode(const char* CPString, UINT CodePage);
 	// Converts data from MySQL format to MFC's CString.
 	// My Queries
-	CString Search(CString sentence);
+	std::vector<LVITEM> Search(CString sentence);
 	BOOL Login(CString username, CString password);
 	myconnectorclassDB(void);
 	CString Register(CString regName, CString regEmail, CString regPass, CString regUser);
@@ -31,4 +33,5 @@ public:
 	BOOL deleteUser(CString useID);
 	CString addBuilding(CString build, CString lat, CString lng, CString buildtype, CString address);
 	CString addStudyroom(CString Name, CString Building, CString chairs, CString plugs, CString floor, CString noise, CString bibl);
+	CString query_disp_value[100]; // value initialization - no more than 100 results should be returned!
 };

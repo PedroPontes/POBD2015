@@ -244,8 +244,24 @@ void CMFCAppSdE2017Dlg::OnBnClickedButtonquery()
 		latitudeMinF = latitude - distance / 111111;latitudeMin.Format(_T("%.5f"), latitudeMinF);
 		longitudeMaxF = longitude + distance / 111111;longitudeMax.Format(_T("%.5f"), longitudeMaxF);
 		longitudeMinF = longitude - distance / 111111; longitudeMin.Format(_T("%.5f"), longitudeMinF);
-	};
-	// END///////////RATING///VVV////////
+	}
+	else{
+		latitudeMaxF = 0;
+		latitudeMax.Format(_T("%.5f"), latitudeMaxF);
+		latitudeMinF = 0;
+		latitudeMin.Format(_T("%.5f"), latitudeMinF);
+		longitudeMaxF = 0;
+		longitudeMax.Format(_T("%.5f"), longitudeMaxF);
+		longitudeMinF = 0;
+		longitudeMin.Format(_T("%.5f"), longitudeMinF);
+	}
+	// END///////////HOUR AND DAY////
+	// TODO access system date and time
+	int hourInt = 0;
+	hour.Format(_T("%d"), hourInt);
+	int wdayInt = 0;
+	wday.Format(_T("%d"), wdayInt);
+	// END///////////RATING///VVV////
 	CString minRate;
 	if (isGood){
 		minRate = _T("50");
@@ -256,7 +272,7 @@ void CMFCAppSdE2017Dlg::OnBnClickedButtonquery()
 	else {
 		minRate = _T("0");
 	};
-	/////END///////PLUGS///VVVV//////
+	/////END///////PLUGS///VVVV/////
 	CString minPlugs;
 	if (plugG){
 		minPlugs = _T("7");
@@ -275,7 +291,14 @@ void CMFCAppSdE2017Dlg::OnBnClickedButtonquery()
 	sentence = isSmallQ + _T(",") + isMediumQ + _T(",") + isLargeQ + _T(",") + isOpenQ + _T(",") + hour + _T(",") + wday + _T(",") + minRate +
 		_T(",") + libraryQ + _T(",") + minPlugs + _T(",") + silentVQ + _T(",") + silentXQ + _T(",") + distONQ + _T(",") + latitudeMin + _T(",") +
 		latitudeMax + _T(",") + longitudeMin + _T(",") + longitudeMax;
-	building = MyConnection.Search(sentence);
+	std::vector<LVITEM> search_results = MyConnection.Search(sentence); // query and result
+
+	// list control box update
+	m_roomListCtrl.DeleteAllItems();
+	for (int i = 0; i < search_results.size(); i++)
+	{
+		m_roomListCtrl.InsertItem(&search_results[i]); // insert items in list control box
+	}
 	UpdateData(FALSE);
 }
 
