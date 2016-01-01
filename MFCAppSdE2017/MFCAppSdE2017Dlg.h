@@ -4,6 +4,7 @@
 
 #pragma once
 #include "afxwin.h"
+#include "afxcmn.h"
 
 
 // CMFCAppSdE2017Dlg dialog
@@ -75,4 +76,7 @@ public:
 	afx_msg void OnBnClickedLogoutbutton();
 	BOOL logstate;
 	afx_msg void OnBnClickedAdmincpButton();
+	// variable for room ctrl list
+	CListCtrl m_roomListCtrl;
+	afx_msg void OnHdnItemdblclickroomlist(NMHDR *pNMHDR, LRESULT *pResult);
 };

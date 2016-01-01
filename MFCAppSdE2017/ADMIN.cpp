@@ -19,6 +19,15 @@ CADMIN::CADMIN(CWnd* pParent /*=NULL*/)
 	, buildLat(_T(""))
 	, buildLong(_T(""))
 	, buildAdd(_T(""))
+	, SRName(_T(""))
+	, SRChairs(_T(""))
+	, SRbuilding(_T(""))
+	, SRFloor(_T(""))
+	, SRPlugs(_T(""))
+	, isSRNoise(FALSE)
+	, isSRbibl(FALSE)
+	, SRNoise(_T("0"))
+	, SRBibl(_T("0"))
 {
 
 }
@@ -36,6 +45,13 @@ void CADMIN::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_latEDIT, buildLat);
 	DDX_Text(pDX, IDC_longEDIT, buildLong);
 	DDX_Text(pDX, IDC_addressEDIT, buildAdd);
+	DDX_Text(pDX, IDC_NameAddStudEDIT, SRName);
+	DDX_Text(pDX, IDC_ChairsAddEDIT, SRChairs);
+	DDX_Text(pDX, IDC_BuildaddEDIT, SRbuilding);
+	DDX_Text(pDX, IDC_FloorEDIT, SRFloor);
+	DDX_Text(pDX, IDC_PlugsEDIT, SRPlugs);
+	DDX_Check(pDX, IDC_NoiseCHECK, isSRNoise);
+	DDX_Check(pDX, IDC_LibraryAddCHECK, isSRbibl);
 }
 
 
@@ -47,7 +63,15 @@ BEGIN_MESSAGE_MAP(CADMIN, CDialog)
 	ON_EN_CHANGE(IDC_addressEDIT, &CADMIN::OnEnChangeaddressedit)
 	ON_EN_CHANGE(IDC_latEDIT, &CADMIN::OnEnChangelatedit)
 	ON_EN_CHANGE(IDC_longEDIT, &CADMIN::OnEnChangelongedit)
-	ON_BN_CLICKED(IDC_BUTTON3, &CADMIN::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_addBuildBUTTON, &CADMIN::OnBnClickedButtonAddbuilding)
+	ON_BN_CLICKED(IDC_AddStudyroom, &CADMIN::OnBnClickedAddstudyroom)
+	ON_EN_CHANGE(IDC_NameAddStudEDIT, &CADMIN::OnEnChangeNameaddstudedit)
+	ON_EN_CHANGE(IDC_ChairsAddEDIT, &CADMIN::OnEnChangeChairsaddedit)
+	ON_EN_CHANGE(IDC_BuildaddEDIT, &CADMIN::OnEnChangeBuildaddedit)
+	ON_EN_CHANGE(IDC_FloorEDIT, &CADMIN::OnEnChangeFlooredit)
+	ON_EN_CHANGE(IDC_PlugsEDIT, &CADMIN::OnEnChangePlugsedit)
+	ON_BN_CLICKED(IDC_NoiseCHECK, &CADMIN::OnBnClickedNoisecheck)
+	ON_BN_CLICKED(IDC_LibraryAddCHECK, &CADMIN::OnBnClickedLibraryaddcheck)
 END_MESSAGE_MAP()
 
 
@@ -75,7 +99,6 @@ void CADMIN::OnBnClickedButtonDeluser()
 		message.Format(_T("Deletion successful"));
 		AfxMessageBox(message);
 	}
-
 }
 
 void CADMIN::OnEnChangebuildnameedit()
@@ -104,7 +127,7 @@ void CADMIN::OnEnChangelongedit()
 }
 
 
-void CADMIN::OnBnClickedButton3()
+void CADMIN::OnBnClickedButtonAddbuilding()
 {
 	UpdateData(TRUE);
 	CString message;
@@ -131,4 +154,92 @@ void CADMIN::OnBnClickedButton3()
 		}
 	}
 	UpdateData(FALSE);
+}
+
+
+void CADMIN::OnBnClickedAddstudyroom()
+{
+		UpdateData(TRUE);
+	CString message;
+
+	if (SRName.IsEmpty() || SRbuilding.IsEmpty() || SRChairs.IsEmpty() || SRPlugs.IsEmpty()){ //check if the register is complete before
+		message.Format(_T("Please fill every field before proceeding"));//////////////sending the query
+		AfxMessageBox(message);
+	}
+	else{
+		myconnectorclassDB MyConnection;
+		MyConnection.connect();
+		UpdateData(TRUE);
+		CString retStudy = MyConnection.addStudyroom(SRName,SRbuilding,SRChairs,SRPlugs,SRFloor,SRNoise,SRBibl);
+		BOOL aux = 1;
+		// The command mysql_real_connect is included in the libraries
+		
+		if (retStudy.IsEmpty()){
+			message.Format(_T("Studyroom Added"));
+			AfxMessageBox(message);
+		}
+		else if (retStudy==_T("noBuilding")){
+			message.Format(_T("Invalid Building. Add a building before creating a new room"));
+			AfxMessageBox(message);
+		}
+		else{
+			message.Format(_T("Studyroom ") + retStudy + _T(" already exists. Try Again."));///check if user is avaiable
+			AfxMessageBox(message);
+		}
+	}
+	UpdateData(FALSE);
+}
+
+
+void CADMIN::OnEnChangeNameaddstudedit()
+{
+	UpdateData(TRUE);
+}
+
+
+void CADMIN::OnEnChangeChairsaddedit()
+{
+	UpdateData(TRUE);
+}
+
+
+void CADMIN::OnEnChangeBuildaddedit()
+{
+	UpdateData(TRUE);
+}
+
+
+void CADMIN::OnEnChangeFlooredit()
+{
+	UpdateData(TRUE);
+}
+
+
+void CADMIN::OnEnChangePlugsedit()
+{
+	UpdateData(TRUE);
+}
+
+
+void CADMIN::OnBnClickedNoisecheck()
+{
+	UpdateData(TRUE);
+	if (isSRNoise) {
+		SRNoise = _T("1");
+	}
+	else{
+		SRNoise = _T("0");
+	}
+}
+
+
+void CADMIN::OnBnClickedLibraryaddcheck()
+{
+	UpdateData(TRUE);
+	if (isSRbibl) {
+		SRBibl = _T("1");
+	}
+	else{
+		SRBibl = _T("0");
+	}
 }

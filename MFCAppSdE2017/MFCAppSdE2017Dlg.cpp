@@ -96,6 +96,7 @@ void CMFCAppSdE2017Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHECKPlugG, plugG);
 	DDX_Text(pDX, IDC_LoginState, LoginStateMsg);
 	//DDX_Control(pDX, IDC_STATIC_1, *m_label);
+	DDX_Control(pDX, IDC_roomLIST, m_roomListCtrl);
 }
 
 BEGIN_MESSAGE_MAP(CMFCAppSdE2017Dlg, CDialogEx)
@@ -122,6 +123,7 @@ BEGIN_MESSAGE_MAP(CMFCAppSdE2017Dlg, CDialogEx)
 	ON_EN_CHANGE(IDC_LoginState, &CMFCAppSdE2017Dlg::OnEnChangeLoginstate)
 	ON_BN_CLICKED(IDC_LogoutBUTTON, &CMFCAppSdE2017Dlg::OnBnClickedLogoutbutton)
 	ON_BN_CLICKED(IDC_AdminCP_BUTTON, &CMFCAppSdE2017Dlg::OnBnClickedAdmincpButton)
+	ON_NOTIFY(HDN_ITEMDBLCLICK, 0, &CMFCAppSdE2017Dlg::OnHdnItemdblclickroomlist)
 END_MESSAGE_MAP()
 
 
@@ -161,6 +163,13 @@ BOOL CMFCAppSdE2017Dlg::OnInitDialog()
 	m_Font1->CreatePointFont(120, _T("Arial Black"));
 	m_label = (CStatic *)GetDlgItem(IDC_STATIC_1);
 	m_label->SetFont(m_Font1);
+
+	// room control list column initialization
+	CRect rect;
+	m_roomListCtrl.GetClientRect(&rect);
+	int nColInterval = rect.Width() / 4; // column width
+	m_roomListCtrl.InsertColumn(0, _T("Name"), LVCFMT_LEFT, nColInterval * 2);
+	m_roomListCtrl.InsertColumn(1, _T("Rating"), LVCFMT_LEFT, nColInterval * 2);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -417,4 +426,12 @@ void CMFCAppSdE2017Dlg::OnBnClickedAdmincpButton()
 	// TODO: Add your control notification handler code here
 	CADMIN Admin;
 	Admin.DoModal();
+}
+
+
+void CMFCAppSdE2017Dlg::OnHdnItemdblclickroomlist(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMHEADER phdr = reinterpret_cast<LPNMHEADER>(pNMHDR);
+	// TODO: Add your control notification handler code here
+	*pResult = 0;
 }

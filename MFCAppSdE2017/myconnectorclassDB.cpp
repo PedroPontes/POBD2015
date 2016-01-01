@@ -40,6 +40,18 @@ CString myconnectorclassDB::addBuilding(CString build, CString lat, CString lng,
 	return value;
 }
 
+CString myconnectorclassDB::addStudyroom(CString Name, CString Building, CString chairs, CString plugs, CString floor, CString noise, CString bibl)
+{
+	BOOL aux = FALSE;
+	CString value;
+	CString query = _T("CALL addStudyroom('") + Name + _T("','") + Building + _T("','") + chairs + _T("','")
+		+ plugs + _T("','") + floor + _T("','") + noise + _T("','") + bibl+ _T("')");
+	Query(query);
+	row = mysql_fetch_row(result);
+	value = CPtoUnicode(row[0], 1251);
+	return value;
+}
+
 
 BOOL myconnectorclassDB::Login(CString username, CString password)
 {
