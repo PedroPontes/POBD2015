@@ -33,7 +33,8 @@ public:
 	virtual ~myconnectorclassDB(void);
 	BOOL deleteUser(CString useID);
 	CString addBuilding(CString build, CString lat, CString lng, CString buildtype, CString address);
-	CString addStudyroom(CString Name, CString Building, CString chairs, CString plugs, CString floor, CString noise, CString bibl);
+	CString addStudyroom(CString Name, CString Building, CString chairs, CString plugs, CString floor, CString noise,
+		CString bibl, CString open, CString close, CString oDay, CString cDay);
 	CString query_disp_value[100]; // value initialization - no more than 100 results should be returned!
 	CString admin_query_disp_value[100]; // value initialization - no more than 100 results should be returned!
 	BOOL isAdmin(CString username);

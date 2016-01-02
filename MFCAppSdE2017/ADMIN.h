@@ -57,4 +57,12 @@ public:
 	CString adminCode;
 	afx_msg void OnBnClickedButtonrefresh();
 	void SetUsername(CString inputname);
+	afx_msg void OnEnChangeopenedit();
+	afx_msg void OnEnChangecloseedit();
+	afx_msg void OnEnChangefdayedit();
+	afx_msg void OnEnChangeldayedit();
+	CString SRopen;
+	CString SRclose;
+	CString SRfday;
+	CString SRlday;
 };

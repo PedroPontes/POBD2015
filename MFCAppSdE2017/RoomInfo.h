@@ -34,4 +34,5 @@ public:
 	CString longInfo;
 	CString newRating;
 	CString floorInfo;
+	CString openInfo;
 };

@@ -26,6 +26,7 @@ CRoomInfo::CRoomInfo(CWnd* pParent /*=NULL*/)
 	, longInfo(_T(""))
 	, newRating(_T(""))
 	, floorInfo(_T(""))
+	, openInfo(_T(""))
 {
 
 }
@@ -50,6 +51,7 @@ void CRoomInfo::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_LongInfo, longInfo);
 	DDX_Text(pDX, IDC_rateEDIT, newRating);
 	DDX_Text(pDX, IDC_floorInfo, floorInfo);
+	DDX_Text(pDX, IDC_EDIT3, openInfo);
 }
 
 

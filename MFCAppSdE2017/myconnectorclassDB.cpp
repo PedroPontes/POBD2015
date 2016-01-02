@@ -39,7 +39,7 @@ std::vector<CString> myconnectorclassDB::getRoomInfo(CString roomID)
 	std::vector<CString> roomInfo;
 
 	int line = 0;
-	int ncolumns = 11;
+	int ncolumns = 15;
 	for (int i = 0; i < ncolumns; i++)
 	{
 		roomInfo.push_back(CPtoUnicode(row[i], 1251));
@@ -72,11 +72,13 @@ CString myconnectorclassDB::addBuilding(CString build, CString lat, CString lng,
 	return value;
 }
 
-CString myconnectorclassDB::addStudyroom(CString Name, CString Building, CString chairs, CString plugs, CString floor, CString noise, CString bibl)
+CString myconnectorclassDB::addStudyroom(CString Name, CString Building, CString chairs, CString plugs, CString floor,
+	CString noise, CString bibl, CString open, CString close, CString oDay, CString cDay)
 {
 	CString value;
 	CString query = _T("CALL addStudyroom('") + Name + _T("','") + Building + _T("','") + chairs + _T("','")
-		+ plugs + _T("','") + floor + _T("','") + noise + _T("','") + bibl+ _T("')");
+		+ plugs + _T("','") + floor + _T("','") + noise + _T("','") + bibl + _T("','") + open + _T("','") 
+		+ close + _T("','") + oDay + _T("','") + cDay + _T("')");
 	Query(query);
 	row = mysql_fetch_row(result);
 	value = CPtoUnicode(row[0], 1251);

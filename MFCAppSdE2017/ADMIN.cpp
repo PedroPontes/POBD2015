@@ -29,6 +29,10 @@ CADMIN::CADMIN(CWnd* pParent /*=NULL*/)
 	, SRNoise(_T("0"))
 	, SRBibl(_T("0"))
 	, adminCode(_T("'1234'"))
+	, SRopen(_T(""))
+	, SRclose(_T(""))
+	, SRfday(_T(""))
+	, SRlday(_T(""))
 {
 
 }
@@ -54,6 +58,10 @@ void CADMIN::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_NoiseCHECK, isSRNoise);
 	DDX_Check(pDX, IDC_LibraryAddCHECK, isSRbibl);
 	DDX_Control(pDX, IDC_userLIST, m_userListCtrl);
+	DDX_Text(pDX, IDC_openEDIT, SRopen);
+	DDX_Text(pDX, IDC_closeEDIT, SRclose);
+	DDX_Text(pDX, IDC_fDayEDIT, SRfday);
+	DDX_Text(pDX, IDC_lDayEDIT, SRlday);
 }
 
 
@@ -75,6 +83,10 @@ BEGIN_MESSAGE_MAP(CADMIN, CDialog)
 	ON_BN_CLICKED(IDC_NoiseCHECK, &CADMIN::OnBnClickedNoisecheck)
 	ON_BN_CLICKED(IDC_LibraryAddCHECK, &CADMIN::OnBnClickedLibraryaddcheck)
 	ON_BN_CLICKED(IDC_BUTTON_refresh, &CADMIN::OnBnClickedButtonrefresh)
+	ON_EN_CHANGE(IDC_openEDIT, &CADMIN::OnEnChangeopenedit)
+	ON_EN_CHANGE(IDC_closeEDIT, &CADMIN::OnEnChangecloseedit)
+	ON_EN_CHANGE(IDC_fDayEDIT, &CADMIN::OnEnChangefdayedit)
+	ON_EN_CHANGE(IDC_lDayEDIT, &CADMIN::OnEnChangeldayedit)
 END_MESSAGE_MAP()
 
 
@@ -171,7 +183,8 @@ void CADMIN::OnBnClickedAddstudyroom()
 		myconnectorclassDB MyConnection;
 		MyConnection.connect();
 		UpdateData(TRUE);
-		CString retStudy = MyConnection.addStudyroom(SRName,SRbuilding,SRChairs,SRPlugs,SRFloor,SRNoise,SRBibl);
+		CString retStudy = MyConnection.addStudyroom(SRName,SRbuilding,SRChairs,SRPlugs,SRFloor,SRNoise,SRBibl,SRopen,SRclose,
+			SRfday,SRlday);
 		BOOL aux = 1;
 		// The command mysql_real_connect is included in the libraries
 		
@@ -293,4 +306,27 @@ void CADMIN::OnBnClickedButtonrefresh()
 
 void CADMIN::SetUsername(CString inputname){
 	username = inputname;
+}
+
+void CADMIN::OnEnChangeopenedit()
+{
+	UpdateData(TRUE);
+}
+
+
+void CADMIN::OnEnChangecloseedit()
+{
+	UpdateData(TRUE);
+}
+
+
+void CADMIN::OnEnChangefdayedit()
+{
+	UpdateData(TRUE);
+}
+
+
+void CADMIN::OnEnChangeldayedit()
+{
+	UpdateData(TRUE);
 }
