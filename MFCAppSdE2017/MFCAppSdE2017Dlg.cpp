@@ -229,7 +229,7 @@ void CMFCAppSdE2017Dlg::OnBnClickedButtonquery()
 	// TODO: Add your control notification handler code here
 	myconnectorclassDB MyConnection;
 	MyConnection.connect();
-	UpdateData(TRUE);
+	
 	// TRACKING FUNCTION PIECE //////////
 	float latitudeMaxF;
 	float latitudeMinF;
@@ -294,10 +294,26 @@ void CMFCAppSdE2017Dlg::OnBnClickedButtonquery()
 	std::vector<LVITEM> search_results = MyConnection.Search(sentence); // query and result
 
 	// list control box update
+	UpdateData(TRUE);
 	m_roomListCtrl.DeleteAllItems();
+	bool first_item = TRUE;
 	for (int i = 0; i < search_results.size(); i++)
 	{
-		m_roomListCtrl.InsertItem(&search_results[i]); // insert items in list control box
+		if (first_item){
+			m_roomListCtrl.InsertItem(&search_results[i]); // insert items in list control box
+		}
+		else{
+			m_roomListCtrl.SetItem(&search_results[i]); // set subitems in list control box
+		}
+		if (i < search_results.size() - 1){
+			if (search_results[i + 1].iSubItem > 0){
+				first_item = FALSE;
+			}
+			else{
+				first_item = TRUE;
+			}
+		}
+		
 	}
 	UpdateData(FALSE);
 }
