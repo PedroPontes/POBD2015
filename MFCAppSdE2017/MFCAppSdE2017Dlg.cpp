@@ -52,7 +52,6 @@ END_MESSAGE_MAP()
 
 CMFCAppSdE2017Dlg::CMFCAppSdE2017Dlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CMFCAppSdE2017Dlg::IDD, pParent)
-	, building(_T(""))
 	, library(FALSE)
 	, isSmall(FALSE)
 	, isMedium(FALSE)
@@ -76,7 +75,6 @@ CMFCAppSdE2017Dlg::CMFCAppSdE2017Dlg(CWnd* pParent /*=NULL*/)
 void CMFCAppSdE2017Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_EDITbuilding, building);
 	DDX_Check(pDX, IDC_CHECKLib, library);
 	DDX_Check(pDX, IDC_CHECKsmall, isSmall);
 	DDX_Check(pDX, IDC_CHECKmedium, isMedium);

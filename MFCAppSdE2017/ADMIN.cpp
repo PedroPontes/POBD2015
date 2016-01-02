@@ -29,7 +29,12 @@ CADMIN::CADMIN(CWnd* pParent /*=NULL*/)
 	, SRNoise(_T("0"))
 	, SRBibl(_T("0"))
 {
-
+	// user control list column initialization -- TODO update this!
+	CRect rect;
+	m_userListCtrl.GetClientRect(&rect);
+	int nColInterval = rect.Width() / 4; // column width
+	m_userListCtrl.InsertColumn(0, _T("Name"), LVCFMT_LEFT, nColInterval * 2);
+	m_userListCtrl.InsertColumn(1, _T("Rating"), LVCFMT_LEFT, nColInterval * 2);
 }
 
 CADMIN::~CADMIN()
@@ -52,6 +57,7 @@ void CADMIN::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_PlugsEDIT, SRPlugs);
 	DDX_Check(pDX, IDC_NoiseCHECK, isSRNoise);
 	DDX_Check(pDX, IDC_LibraryAddCHECK, isSRbibl);
+	DDX_Control(pDX, IDC_userLIST, m_userListCtrl);
 }
 
 
