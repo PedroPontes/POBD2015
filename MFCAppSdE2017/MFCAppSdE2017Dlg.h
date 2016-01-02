@@ -33,7 +33,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedButtonquery();
-	CString building;
 	afx_msg void Librarybutton();
 	BOOL library;
 	afx_msg void SizeSmall();

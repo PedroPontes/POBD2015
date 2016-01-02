@@ -1,4 +1,5 @@
 #pragma once
+#include "afxcmn.h"
 
 
 // CADMIN dialog
@@ -50,4 +51,6 @@ public:
 	BOOL isSRbibl;
 	CString SRNoise;
 	CString SRBibl;
+	// control variable for the user list control box in the admin control panel
+	CListCtrl m_userListCtrl;
 };
