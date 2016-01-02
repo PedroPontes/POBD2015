@@ -29,12 +29,7 @@ CADMIN::CADMIN(CWnd* pParent /*=NULL*/)
 	, SRNoise(_T("0"))
 	, SRBibl(_T("0"))
 {
-	// user control list column initialization -- TODO update this!
-	CRect rect;
-	m_userListCtrl.GetClientRect(&rect);
-	int nColInterval = rect.Width() / 4; // column width
-	m_userListCtrl.InsertColumn(0, _T("Name"), LVCFMT_LEFT, nColInterval * 2);
-	m_userListCtrl.InsertColumn(1, _T("Rating"), LVCFMT_LEFT, nColInterval * 2);
+	
 }
 
 CADMIN::~CADMIN()
@@ -78,9 +73,22 @@ BEGIN_MESSAGE_MAP(CADMIN, CDialog)
 	ON_EN_CHANGE(IDC_PlugsEDIT, &CADMIN::OnEnChangePlugsedit)
 	ON_BN_CLICKED(IDC_NoiseCHECK, &CADMIN::OnBnClickedNoisecheck)
 	ON_BN_CLICKED(IDC_LibraryAddCHECK, &CADMIN::OnBnClickedLibraryaddcheck)
+	ON_BN_CLICKED(IDC_BUTTON_refresh, &CADMIN::OnBnClickedButtonrefresh)
 END_MESSAGE_MAP()
 
+/*BOOL CADMIN::OnInitDialog()
+{
+	//CDialogEx::OnInitDialog();
 
+	// user control list column initialization
+	CRect rect;
+	m_userListCtrl.GetClientRect(&rect);
+	int nColInterval = rect.Width() / 4; // column width
+	m_userListCtrl.InsertColumn(0, _T("Name"), LVCFMT_LEFT, 50 * 2);
+	m_userListCtrl.InsertColumn(1, _T("Rating"), LVCFMT_LEFT, 50 * 2);
+
+	return 1;
+}*/
 // CADMIN message handlers
 
 
@@ -248,4 +256,18 @@ void CADMIN::OnBnClickedLibraryaddcheck()
 	else{
 		SRBibl = _T("0");
 	}
+}
+
+
+void CADMIN::OnBnClickedButtonrefresh()
+{
+	// TODO: Add your control notification handler code here
+	// user control list column initialization
+	CRect rect;
+	m_userListCtrl.GetClientRect(&rect);
+	int nColInterval = rect.Width() / 7; // column width
+	m_userListCtrl.InsertColumn(0, _T("ID"), LVCFMT_LEFT, nColInterval *2);
+	m_userListCtrl.InsertColumn(1, _T("Name"), LVCFMT_LEFT, nColInterval * 3);
+	m_userListCtrl.InsertColumn(2, _T("Email"), LVCFMT_LEFT, nColInterval * 4);
+
 }

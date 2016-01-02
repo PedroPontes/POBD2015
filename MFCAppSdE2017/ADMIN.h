@@ -17,7 +17,7 @@ public:
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-
+	//virtual BOOL OnInitDialog();
 	DECLARE_MESSAGE_MAP()
 public:
 	CString userIDdel;
@@ -53,4 +53,5 @@ public:
 	CString SRBibl;
 	// control variable for the user list control box in the admin control panel
 	CListCtrl m_userListCtrl;
+	afx_msg void OnBnClickedButtonrefresh();
 };
