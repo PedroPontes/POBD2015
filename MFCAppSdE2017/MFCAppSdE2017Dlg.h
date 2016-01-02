@@ -79,4 +79,5 @@ public:
 	// variable for room ctrl list
 	CListCtrl m_roomListCtrl;
 	afx_msg void OnHdnItemdblclickroomlist(NMHDR *pNMHDR, LRESULT *pResult);
+	void showAdmin();
 };

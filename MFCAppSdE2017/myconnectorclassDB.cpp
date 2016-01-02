@@ -28,9 +28,22 @@ void myconnectorclassDB::connect()
 		AfxMessageBox(message);
 	}*/
 }
+BOOL myconnectorclassDB::isAdmin(CString username)
+{
+	CString value;
+	CString query = _T("CALL isAdmin('") + username + _T("')");
+	Query(query);
+	row = mysql_fetch_row(result);
+	value = CPtoUnicode(row[0], 1251);
+	BOOL aux = 0;
+	if (value == '1'){
+		aux = 1;
+	}
+	return aux;
+}
+
 CString myconnectorclassDB::addBuilding(CString build, CString lat, CString lng, CString buildtype, CString address)
 {
-	BOOL aux = FALSE;
 	CString value;
 	CString query = _T("CALL addBuilding('") + build + _T("','") + lat + _T("','") + lng + _T("','")
 		+ buildtype + _T("','") + address+ _T("')");
@@ -42,7 +55,6 @@ CString myconnectorclassDB::addBuilding(CString build, CString lat, CString lng,
 
 CString myconnectorclassDB::addStudyroom(CString Name, CString Building, CString chairs, CString plugs, CString floor, CString noise, CString bibl)
 {
-	BOOL aux = FALSE;
 	CString value;
 	CString query = _T("CALL addStudyroom('") + Name + _T("','") + Building + _T("','") + chairs + _T("','")
 		+ plugs + _T("','") + floor + _T("','") + noise + _T("','") + bibl+ _T("')");

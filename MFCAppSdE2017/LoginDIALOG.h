@@ -26,9 +26,10 @@ public:
 	CString GetUser();
 	BOOL GetLoginState();
 	afx_msg void OnBnClickedLoginbutt();
-	BOOL aux;
+	BOOL loginstate;
 	afx_msg void OnEnChangeLoginmessage();
 	CString msgLogin;
-	
+	BOOL isadmin;
 	afx_msg void OnBnClickedRegisterbutton();
+	BOOL GetAdminState();
 };

@@ -163,6 +163,8 @@ BOOL CMFCAppSdE2017Dlg::OnInitDialog()
 	m_Font1->CreatePointFont(120, _T("Arial Black"));
 	m_label = (CStatic *)GetDlgItem(IDC_STATIC_1);
 	m_label->SetFont(m_Font1);
+	//
+	GetDlgItem(IDC_AdminCP_BUTTON)->ShowWindow(FALSE);
 
 	// room control list column initialization
 	CRect rect;
@@ -434,10 +436,18 @@ void CMFCAppSdE2017Dlg::OnBnClickedLoginbutton()
 	UpdateData(TRUE);
 	CLoginDIALOG ldlg;
 	ldlg.DoModal();
-	logstate= ldlg.GetLoginState();
+	if (!logstate){
+		logstate = ldlg.GetLoginState();
+	}
 	CString username = ldlg.GetUser();
 	if (!logstate){
 		username = _T("Guest");
+	}
+	else{
+		BOOL isadmin = ldlg.GetAdminState();
+		if (isadmin){
+			GetDlgItem(IDC_AdminCP_BUTTON)->ShowWindow(TRUE);
+		}
 	}
 	LoginStateMsg = _T("Logged in as ") + username;
 	UpdateData(FALSE);
@@ -453,6 +463,7 @@ void CMFCAppSdE2017Dlg::OnEnChangeLoginstate()
 void CMFCAppSdE2017Dlg::OnBnClickedLogoutbutton()
 {
 	UpdateData(TRUE);
+	GetDlgItem(IDC_AdminCP_BUTTON)->ShowWindow(FALSE);
 	logstate = 0;
 	CString username = _T("Guest");
 	LoginStateMsg = _T("Logged in as ") + username;

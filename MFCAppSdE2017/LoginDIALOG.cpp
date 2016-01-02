@@ -66,9 +66,12 @@ void CLoginDIALOG::OnBnClickedLoginbutt()
 	MyConnection.connect();
 	UpdateData(TRUE);
 
-	aux = MyConnection.Login(username,password);
+	loginstate = MyConnection.Login(username,password);
 
-	if (aux){
+	if (loginstate){
+		myconnectorclassDB MyConnection2;
+		MyConnection2.connect();
+		isadmin = MyConnection2.isAdmin(username);
 		EndDialog(1);
 	}
 	else{
@@ -84,7 +87,12 @@ CString CLoginDIALOG::GetUser()
 
 BOOL CLoginDIALOG::GetLoginState()
 {
-	return aux;
+	return loginstate;
+}
+
+BOOL CLoginDIALOG::GetAdminState()
+{
+	return isadmin;
 }
 
 void CLoginDIALOG::OnEnChangeLoginmessage()
