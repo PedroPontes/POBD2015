@@ -492,9 +492,9 @@ void CMFCAppSdE2017Dlg::OnNMDblclkroomlist(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
 	// TODO: Add your control notification handler code here
-	myconnectorclassDB MyConnection;
+	/*myconnectorclassDB MyConnection;
 	MyConnection.connect();
-	std::vector<CString> roomInfo = MyConnection.getRoomInfo(roomID);
+	std::vector<CString> roomInfo = MyConnection.getRoomInfo(roomID);*/
 	CRoomInfo room;
 	room.DoModal();
 	*pResult = 0;
