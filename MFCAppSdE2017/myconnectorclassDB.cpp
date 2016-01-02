@@ -28,6 +28,25 @@ void myconnectorclassDB::connect()
 		AfxMessageBox(message);
 	}*/
 }
+
+std::vector<CString> myconnectorclassDB::getRoomInfo(CString roomID)
+{
+	CString value;
+	CString query = _T("CALL getRoomInfo('") + roomID + _T("')");
+
+	Query(query);
+	row = mysql_fetch_row(result);
+	std::vector<CString> roomInfo;
+
+	int line = 0;
+	int ncolumns = 11;
+	for (int i = 0; i < ncolumns; i++)
+	{
+		roomInfo.push_back(CPtoUnicode(row[i], 1251));
+	}
+	return roomInfo;
+}
+
 BOOL myconnectorclassDB::isAdmin(CString username)
 {
 	CString value;

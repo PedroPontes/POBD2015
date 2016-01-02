@@ -30,11 +30,11 @@ CADMIN::CADMIN(CWnd* pParent /*=NULL*/)
 	, SRBibl(_T("0"))
 {
 	// user control list column initialization -- TODO update this!
-	CRect rect;
+	/*CRect rect;
 	m_userListCtrl.GetClientRect(&rect);
 	int nColInterval = rect.Width() / 4; // column width
 	m_userListCtrl.InsertColumn(0, _T("Name"), LVCFMT_LEFT, nColInterval * 2);
-	m_userListCtrl.InsertColumn(1, _T("Rating"), LVCFMT_LEFT, nColInterval * 2);
+	m_userListCtrl.InsertColumn(1, _T("Rating"), LVCFMT_LEFT, nColInterval * 2);*/
 }
 
 CADMIN::~CADMIN()

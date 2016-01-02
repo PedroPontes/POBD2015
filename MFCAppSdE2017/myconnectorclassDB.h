@@ -35,4 +35,5 @@ public:
 	CString addStudyroom(CString Name, CString Building, CString chairs, CString plugs, CString floor, CString noise, CString bibl);
 	CString query_disp_value[100]; // value initialization - no more than 100 results should be returned!
 	BOOL isAdmin(CString username);
+	std::vector<CString> getRoomInfo(CString roomID);
 };

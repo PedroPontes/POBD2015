@@ -89,5 +89,8 @@
     <Image Include="res\MFCAppSdE2017.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\..\..\..\Desktop\POBD\MFCAppSdE2017\MFCAppSdE2017\res\Icon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
