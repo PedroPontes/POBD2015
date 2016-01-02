@@ -258,11 +258,7 @@ void CMFCAppSdE2017Dlg::OnBnClickedButtonquery()
 		longitudeMin.Format(_T("%.5f"), longitudeMinF);
 	}
 	// END///////////HOUR AND DAY////
-	// TODO access system date and time
-	int hourInt = 0;
-	hour.Format(_T("%d"), hourInt);
-	int wdayInt = 0;
-	wday.Format(_T("%d"), wdayInt);
+	// system date and time are already defined
 	// END///////////RATING///VVV////
 	CString minRate;
 	if (isGood){
