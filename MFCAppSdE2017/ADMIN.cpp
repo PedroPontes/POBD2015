@@ -252,9 +252,9 @@ void CADMIN::OnBnClickedButtonrefresh()
 	// user control list column initialization
 	CRect rect;
 	m_userListCtrl.GetClientRect(&rect);
-	int nColInterval = rect.Width() / 7; // column width
-	m_userListCtrl.InsertColumn(0, _T("ID"), LVCFMT_LEFT, nColInterval *2);
-	m_userListCtrl.InsertColumn(1, _T("Name"), LVCFMT_LEFT, nColInterval * 3);
+	int nColInterval = rect.Width() / 9; // column width
+	m_userListCtrl.InsertColumn(0, _T("ID"), LVCFMT_LEFT, nColInterval);
+	m_userListCtrl.InsertColumn(1, _T("Username"), LVCFMT_LEFT, nColInterval * 3);
 	m_userListCtrl.InsertColumn(2, _T("Email"), LVCFMT_LEFT, nColInterval * 4);
 	// call getUsers()
 	myconnectorclassDB MyAdminConnection;
@@ -289,25 +289,6 @@ void CADMIN::OnBnClickedButtonrefresh()
 		}
 		UpdateData(FALSE);
 	}
-	
-	/*
-	// Use the LV_ITEM structure to insert the items
-	LVITEM lvi;
-	CString strItem;
-
-	// Insert the first item
-	lvi.mask = LVIF_TEXT;
-	lvi.iItem = 0;
-	lvi.iSubItem = 0;
-	lvi.pszText = (LPTSTR)(LPCTSTR)(_T("Hello"));
-	myListCtrl.InsertItem(&lvi);
-	// Set subitem 1
-	strItem.Format(_T("%d"), 10 * 1);
-	lvi.iSubItem = 1;
-	lvi.pszText = (LPTSTR)(LPCTSTR)(strItem);
-	myListCtrl.SetItem(&lvi);
-	// Set subitem 2
-	*/
 }
 
 void CADMIN::SetUsername(CString inputname){
