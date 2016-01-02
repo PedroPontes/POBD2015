@@ -269,5 +269,9 @@ void CADMIN::OnBnClickedButtonrefresh()
 	m_userListCtrl.InsertColumn(0, _T("ID"), LVCFMT_LEFT, nColInterval *2);
 	m_userListCtrl.InsertColumn(1, _T("Name"), LVCFMT_LEFT, nColInterval * 3);
 	m_userListCtrl.InsertColumn(2, _T("Email"), LVCFMT_LEFT, nColInterval * 4);
+	// call getUsers()
+	myconnectorclassDB MyConnection;
+	MyConnection.connect();
+
 
 }
