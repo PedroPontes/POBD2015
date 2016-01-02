@@ -80,4 +80,5 @@ public:
 	CListCtrl m_roomListCtrl;
 	afx_msg void OnHdnItemdblclickroomlist(NMHDR *pNMHDR, LRESULT *pResult);
 	void showAdmin();
+	afx_msg void OnNMDblclkroomlist(NMHDR *pNMHDR, LRESULT *pResult);
 };

@@ -9,6 +9,7 @@
 #include "ctime"
 #include "LoginDIALOG.h"
 #include "ADMIN.h"
+#include "RoomInfo.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -122,6 +123,7 @@ BEGIN_MESSAGE_MAP(CMFCAppSdE2017Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_LogoutBUTTON, &CMFCAppSdE2017Dlg::OnBnClickedLogoutbutton)
 	ON_BN_CLICKED(IDC_AdminCP_BUTTON, &CMFCAppSdE2017Dlg::OnBnClickedAdmincpButton)
 	ON_NOTIFY(HDN_ITEMDBLCLICK, 0, &CMFCAppSdE2017Dlg::OnHdnItemdblclickroomlist)
+	ON_NOTIFY(NM_DBLCLK, IDC_roomLIST, &CMFCAppSdE2017Dlg::OnNMDblclkroomlist)
 END_MESSAGE_MAP()
 
 
@@ -482,5 +484,18 @@ void CMFCAppSdE2017Dlg::OnHdnItemdblclickroomlist(NMHDR *pNMHDR, LRESULT *pResul
 {
 	LPNMHEADER phdr = reinterpret_cast<LPNMHEADER>(pNMHDR);
 	// TODO: Add your control notification handler code here
+	*pResult = 0;
+}
+
+
+void CMFCAppSdE2017Dlg::OnNMDblclkroomlist(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+	// TODO: Add your control notification handler code here
+	myconnectorclassDB MyConnection;
+	MyConnection.connect();
+	std::vector<CString> roomInfo = MyConnection.getRoomInfo(roomID);
+	CRoomInfo room;
+	room.DoModal();
 	*pResult = 0;
 }
