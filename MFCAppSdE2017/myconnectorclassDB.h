@@ -26,7 +26,7 @@ public:
 	// Converts data from MySQL format to MFC's CString.
 	// My Queries
 	std::vector<LVITEM> Search(CString sentence);
-	std::vector<LVITEM> GetUsers(CString sentence);
+	std::vector<LVITEM> GetUsers(CString adminCode);
 	BOOL Login(CString username, CString password);
 	myconnectorclassDB(void);
 	CString Register(CString regName, CString regEmail, CString regPass, CString regUser);

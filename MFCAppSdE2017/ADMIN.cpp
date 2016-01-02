@@ -77,20 +77,6 @@ BEGIN_MESSAGE_MAP(CADMIN, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON_refresh, &CADMIN::OnBnClickedButtonrefresh)
 END_MESSAGE_MAP()
 
-/*BOOL CADMIN::OnInitDialog()
-{
-	//CDialogEx::OnInitDialog();
-
-	// user control list column initialization
-	CRect rect;
-	m_userListCtrl.GetClientRect(&rect);
-	int nColInterval = rect.Width() / 4; // column width
-	m_userListCtrl.InsertColumn(0, _T("Name"), LVCFMT_LEFT, 50 * 2);
-	m_userListCtrl.InsertColumn(1, _T("Rating"), LVCFMT_LEFT, 50 * 2);
-
-	return 1;
-}*/
-// CADMIN message handlers
 
 
 void CADMIN::OnEnChangeEditDeluser()
@@ -274,10 +260,11 @@ void CADMIN::OnBnClickedButtonrefresh()
 	myconnectorclassDB MyAdminConnection;
 	MyAdminConnection.connect();
 	BOOL admin_value = MyAdminConnection.isAdmin(username);
+	myconnectorclassDB MyConnection;
+	MyConnection.connect();
 	if (admin_value){
 		adminCode = _T("'1234'"); 
-		std::vector<LVITEM> search_results = MyAdminConnection.GetUsers(adminCode); // query and result
-		
+		std::vector<LVITEM> search_results = MyConnection.GetUsers(adminCode); // query and result
 		// list control box update
 		UpdateData(TRUE);
 		m_userListCtrl.DeleteAllItems();
@@ -321,7 +308,6 @@ void CADMIN::OnBnClickedButtonrefresh()
 	myListCtrl.SetItem(&lvi);
 	// Set subitem 2
 	*/
-
 }
 
 void CADMIN::SetUsername(CString inputname){

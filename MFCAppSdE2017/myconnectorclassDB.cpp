@@ -111,9 +111,9 @@ CString myconnectorclassDB::Register(CString regName, CString regEmail, CString 
 }
 
 
-std::vector<LVITEM> myconnectorclassDB::GetUsers(CString sentence)/////// MAIN SEARCH FUNCTION
+std::vector<LVITEM> myconnectorclassDB::GetUsers(CString adminCode)/////// MAIN SEARCH FUNCTION
 {
-	CString query = _T("CALL getUsers(") + sentence + _T(")");
+	CString query = _T("CALL getUsers(")+adminCode+(")");
 	std::vector<LVITEM> admin_search_results;
 	Query(query);
 
@@ -146,6 +146,8 @@ std::vector<LVITEM> myconnectorclassDB::GetUsers(CString sentence)/////// MAIN S
 
 	return admin_search_results;
 }
+
+
 
 std::vector<LVITEM> myconnectorclassDB::Search(CString sentence)/////// MAIN SEARCH FUNCTION
 {
