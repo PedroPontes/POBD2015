@@ -271,12 +271,12 @@ void CADMIN::OnBnClickedButtonrefresh()
 	m_userListCtrl.InsertColumn(1, _T("Name"), LVCFMT_LEFT, nColInterval * 3);
 	m_userListCtrl.InsertColumn(2, _T("Email"), LVCFMT_LEFT, nColInterval * 4);
 	// call getUsers()
-	myconnectorclassDB MyConnection;
-	MyConnection.connect();
-	BOOL admin_value = MyConnection.isAdmin(username);
+	myconnectorclassDB MyAdminConnection;
+	MyAdminConnection.connect();
+	BOOL admin_value = MyAdminConnection.isAdmin(username);
 	if (admin_value){
 		adminCode = _T("'1234'"); 
-		std::vector<LVITEM> search_results = MyConnection.GetUsers(adminCode); // query and result
+		std::vector<LVITEM> search_results = MyAdminConnection.GetUsers(adminCode); // query and result
 		
 		// list control box update
 		UpdateData(TRUE);
