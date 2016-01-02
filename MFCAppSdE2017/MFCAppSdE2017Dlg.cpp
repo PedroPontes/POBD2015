@@ -242,10 +242,10 @@ void CMFCAppSdE2017Dlg::OnBnClickedButtonquery()
 	CString latitudeMin;
 	CString longitudeMax;
 	if (distON){
-		latitudeMaxF = latitude + distance / 111111;latitudeMax.Format(_T("%.5f"), latitudeMaxF);
-		latitudeMinF = latitude - distance / 111111;latitudeMin.Format(_T("%.5f"), latitudeMinF);
-		longitudeMaxF = longitude + distance / 111111;longitudeMax.Format(_T("%.5f"), longitudeMaxF);
-		longitudeMinF = longitude - distance / 111111; longitudeMin.Format(_T("%.5f"), longitudeMinF);
+		latitudeMaxF = latitude + float(distance) / 111111;latitudeMax.Format(_T("%.5f"), latitudeMaxF);
+		latitudeMinF = latitude - float(distance) / 111111;latitudeMin.Format(_T("%.5f"), latitudeMinF);
+		longitudeMaxF = longitude + float(distance) / 111111;longitudeMax.Format(_T("%.5f"), longitudeMaxF);
+		longitudeMinF = longitude - float(distance) / 111111; longitudeMin.Format(_T("%.5f"), longitudeMinF);
 	}
 	else{
 		latitudeMaxF = 0;
