@@ -53,5 +53,8 @@ public:
 	CString SRBibl;
 	// control variable for the user list control box in the admin control panel
 	CListCtrl m_userListCtrl;
+	CString username;
+	CString adminCode;
 	afx_msg void OnBnClickedButtonrefresh();
+	void SetUsername(CString inputname);
 };

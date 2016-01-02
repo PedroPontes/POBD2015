@@ -28,6 +28,7 @@ CADMIN::CADMIN(CWnd* pParent /*=NULL*/)
 	, isSRbibl(FALSE)
 	, SRNoise(_T("0"))
 	, SRBibl(_T("0"))
+	, adminCode(_T("'1234'"))
 {
 	
 }
@@ -272,6 +273,57 @@ void CADMIN::OnBnClickedButtonrefresh()
 	// call getUsers()
 	myconnectorclassDB MyConnection;
 	MyConnection.connect();
+	BOOL admin_value = MyConnection.isAdmin(username);
+	if (admin_value){
+		adminCode = _T("'1234'"); 
+		std::vector<LVITEM> search_results = MyConnection.GetUsers(adminCode); // query and result
+		
+		// list control box update
+		UpdateData(TRUE);
+		m_userListCtrl.DeleteAllItems();
+		bool first_item = TRUE;
+		for (int i = 0; i < search_results.size(); i++)
+		{
+			if (first_item){
+				m_userListCtrl.InsertItem(&search_results[i]); // insert items in list control box
+			}
+			else{
+				m_userListCtrl.SetItem(&search_results[i]); // set subitems in list control box
+			}
+			if (i < search_results.size() - 1){
+				if (search_results[i + 1].iSubItem > 0){
+					first_item = FALSE;
+				}
+				else{
+					first_item = TRUE;
+				}
+			}
 
+		}
+		UpdateData(FALSE);
+	}
+	
+	/*
+	// Use the LV_ITEM structure to insert the items
+	LVITEM lvi;
+	CString strItem;
 
+	// Insert the first item
+	lvi.mask = LVIF_TEXT;
+	lvi.iItem = 0;
+	lvi.iSubItem = 0;
+	lvi.pszText = (LPTSTR)(LPCTSTR)(_T("Hello"));
+	myListCtrl.InsertItem(&lvi);
+	// Set subitem 1
+	strItem.Format(_T("%d"), 10 * 1);
+	lvi.iSubItem = 1;
+	lvi.pszText = (LPTSTR)(LPCTSTR)(strItem);
+	myListCtrl.SetItem(&lvi);
+	// Set subitem 2
+	*/
+
+}
+
+void CADMIN::SetUsername(CString inputname){
+	username = inputname;
 }

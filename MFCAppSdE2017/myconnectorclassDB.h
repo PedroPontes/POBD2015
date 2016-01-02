@@ -26,6 +26,7 @@ public:
 	// Converts data from MySQL format to MFC's CString.
 	// My Queries
 	std::vector<LVITEM> Search(CString sentence);
+	std::vector<LVITEM> GetUsers(CString sentence);
 	BOOL Login(CString username, CString password);
 	myconnectorclassDB(void);
 	CString Register(CString regName, CString regEmail, CString regPass, CString regUser);
@@ -34,5 +35,6 @@ public:
 	CString addBuilding(CString build, CString lat, CString lng, CString buildtype, CString address);
 	CString addStudyroom(CString Name, CString Building, CString chairs, CString plugs, CString floor, CString noise, CString bibl);
 	CString query_disp_value[100]; // value initialization - no more than 100 results should be returned!
+	CString admin_query_disp_value[100]; // value initialization - no more than 100 results should be returned!
 	BOOL isAdmin(CString username);
 };

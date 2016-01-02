@@ -91,6 +91,43 @@ CString myconnectorclassDB::Register(CString regName, CString regEmail, CString 
 	return value;
 }
 
+
+std::vector<LVITEM> myconnectorclassDB::GetUsers(CString sentence)/////// MAIN SEARCH FUNCTION
+{
+	CString query = _T("CALL getUsers(") + sentence + _T(")");
+	std::vector<LVITEM> admin_search_results;
+	Query(query);
+
+	int line = 0;
+	int value_index = 0;
+	while ((row = mysql_fetch_row(result)) != NULL)
+	{
+		int column[] = { 0, 1, 2 }; // column selection
+		int ncolumns = 3;
+		for (int i = 0; i < ncolumns; i++)
+		{
+			admin_query_disp_value[value_index] = CPtoUnicode(row[column[i]], 1251);
+			// Use the LV_ITEM structure to insert the items
+			LVITEM lvi;
+			// Insert the first item
+			lvi.mask = LVIF_TEXT;
+			lvi.iItem = line; // line where this result will be displayed
+			lvi.iSubItem = i; // column where this result will be displayed
+			int length = 1024;
+			LPWSTR pwsz = admin_query_disp_value[value_index].GetBuffer(length);
+			// do something with the string that pwsz points to.
+			lvi.pszText = pwsz;
+			admin_query_disp_value[value_index].ReleaseBuffer();
+
+			admin_search_results.push_back(lvi); // insert new structure in the vector
+			value_index++;
+		}
+		line++;
+	}
+
+	return admin_search_results;
+}
+
 std::vector<LVITEM> myconnectorclassDB::Search(CString sentence)/////// MAIN SEARCH FUNCTION
 {
 	CString query = _T("CALL search(")+sentence+_T(")");

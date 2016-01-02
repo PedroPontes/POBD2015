@@ -74,6 +74,7 @@ public:
 	CStatic * m_label;
 	afx_msg void OnBnClickedLogoutbutton();
 	BOOL logstate;
+	CString username;
 	afx_msg void OnBnClickedAdmincpButton();
 	// variable for room ctrl list
 	CListCtrl m_roomListCtrl;

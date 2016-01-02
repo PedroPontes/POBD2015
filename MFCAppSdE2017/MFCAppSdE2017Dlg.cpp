@@ -437,7 +437,7 @@ void CMFCAppSdE2017Dlg::OnBnClickedLoginbutton()
 	if (!logstate){
 		logstate = ldlg.GetLoginState();
 	}
-	CString username = ldlg.GetUser();
+	username = ldlg.GetUser();
 	if (!logstate){
 		username = _T("Guest");
 	}
@@ -473,6 +473,7 @@ void CMFCAppSdE2017Dlg::OnBnClickedAdmincpButton()
 {
 	// TODO: Add your control notification handler code here
 	CADMIN Admin;
+	Admin.SetUsername(username);
 	Admin.DoModal();
 }
 
