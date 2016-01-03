@@ -30,7 +30,7 @@ void myconnectorclassDB::connect()
 }
 CString myconnectorclassDB::rate(CString rating, CString username, CString roomID)
 {
-	CString query = _T("CALL rateRoom('") + rating + _T("','") + username + _T(",") + roomID + _T("')");
+	CString query = _T("CALL rateRoom('") + rating + _T("','") + username + _T("','") + roomID + _T("')");
 	Query(query);
 	row = mysql_fetch_row(result);
 	CString value = CPtoUnicode(row[0], 1251);

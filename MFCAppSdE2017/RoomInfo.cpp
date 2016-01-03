@@ -68,6 +68,27 @@ END_MESSAGE_MAP()
 void CRoomInfo::OnBnClickedRatebutton()
 {
 	UpdateData(TRUE);
+	CString message;
+	if (newRating.SpanIncluding(_T("0123456789")) == newRating){
+		CString rated;
+		
+		if (username == _T("")){
+			message.Format(_T("Login before submiting the Rating"));
+			AfxMessageBox(message);
+		}
+		else{
+			myconnectorclassDB MyConnection;
+			MyConnection.connect();
+			rated = MyConnection.rate(newRating, username, roomID);
+			message.Format(_T("Thank you for your opinion!"));
+			AfxMessageBox(message);
+			rateInfo = rated;
+		}
+	}
+	else{
+		message.Format(_T("Rate from 0-100! No letters allowed."));
+		AfxMessageBox(message);
+	}
 	UpdateData(FALSE); 
 }
 
@@ -75,22 +96,6 @@ void CRoomInfo::OnBnClickedRatebutton()
 void CRoomInfo::OnEnChangeRatinginfo()
 {
 	UpdateData(TRUE);
-	CString rated;
-	CString message;
-	if (username == _T("Guest")){
-		message.Format(_T("Login before submiting the Rating"));
-		AfxMessageBox(message);
-	}
-	else{
-		myconnectorclassDB MyConnection;
-		MyConnection.connect();
-		rated = MyConnection.rate(newRating, username, roomID);
-		if (!(rated.IsEmpty())){
-			message.Format(_T("Thank you for your opinion!"));
-			AfxMessageBox(message);
-		}
-	}
-	UpdateData(FALSE);
 }
 
 void CRoomInfo::SetRoomID(CString* room_id_ptr){
