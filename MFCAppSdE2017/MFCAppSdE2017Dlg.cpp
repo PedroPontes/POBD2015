@@ -230,9 +230,8 @@ HCURSOR CMFCAppSdE2017Dlg::OnQueryDragIcon()
 
 void CMFCAppSdE2017Dlg::OnBnClickedButtonquery()
 {
-	// TODO: Add your control notification handler code here
 	
-	// TRACKING FUNCTION PIECE //////////
+	// TRACKING FUNCTION //////////
 	float latitudeMaxF;
 	float latitudeMinF;
 	float longitudeMaxF;
@@ -259,7 +258,7 @@ void CMFCAppSdE2017Dlg::OnBnClickedButtonquery()
 	}
 	// END///////////HOUR AND DAY////
 	// system date and time are already defined
-	// END///////////RATING///VVV////
+	// END///////////RATING//////////
 	CString minRate;
 	if (isGood){
 		minRate = _T("50");
@@ -270,7 +269,7 @@ void CMFCAppSdE2017Dlg::OnBnClickedButtonquery()
 	else {
 		minRate = _T("0");
 	};
-	/////END///////PLUGS///VVVV/////
+	/////END///////PLUGS//////////////
 	CString minPlugs;
 	if (plugG){
 		minPlugs = _T("7");
