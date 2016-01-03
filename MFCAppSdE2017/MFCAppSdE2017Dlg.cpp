@@ -496,19 +496,20 @@ void CMFCAppSdE2017Dlg::OnNMDblclkroomlist(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
 	// new connection and query to get detailed room info
-	
 	int row = m_roomListCtrl.GetSelectionMark();
-	//int column = 1; // (hidden) column where roomIDs are stored
-	//CString roomID = m_roomListCtrl.GetItemText(row, column);
-	CString roomID = listRoomIDs[row];
-	myconnectorclassDB MyConnection;
-	MyConnection.connect();
-	std::vector<CString> roomInfo = MyConnection.getRoomInfo(roomID);
-	// new window with room details
-	CRoomInfo room;
-	room.SetRoomID(&roomID);
-	room.SetRoomInfo(&roomInfo);
-	room.SetUsername(&username);
-	room.DoModal();
+	if (row < listRoomIDs.size()){
+		if (listRoomIDs[row].IsEmpty() == FALSE){
+			CString roomID = listRoomIDs[row];
+			myconnectorclassDB MyConnection;
+			MyConnection.connect();
+			std::vector<CString> roomInfo = MyConnection.getRoomInfo(roomID);
+			// new window with room details
+			CRoomInfo room;
+			room.SetRoomID(&roomID);
+			room.SetRoomInfo(&roomInfo);
+			room.SetUsername(&username);
+			room.DoModal();
+		}
+	}
 	*pResult = 0;
 }
