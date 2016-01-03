@@ -39,4 +39,5 @@ public:
 	CString admin_query_disp_value[100]; // value initialization - no more than 100 results should be returned!
 	BOOL isAdmin(CString username);
 	std::vector<CString> getRoomInfo(CString roomID);
+	CString rate(CString rating, CString username, CString roomID)
 };

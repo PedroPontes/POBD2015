@@ -75,6 +75,22 @@ void CRoomInfo::OnBnClickedRatebutton()
 void CRoomInfo::OnEnChangeRatinginfo()
 {
 	UpdateData(TRUE);
+	CString rated;
+	CString message;
+	if (username == _T("Guest")){
+		message.Format(_T("Login before submiting the Rating"));
+		AfxMessageBox(message);
+	}
+	else{
+		myconnectorclassDB MyConnection;
+		MyConnection.connect();
+		rated = MyConnection.rate(newRating, username, roomID);
+		if (!(rated.IsEmpty())){
+			message.Format(_T("Thank you for your opinion!"));
+			AfxMessageBox(message);
+		}
+	}
+	UpdateData(FALSE);
 }
 
 void CRoomInfo::SetRoomID(CString* room_id_ptr){

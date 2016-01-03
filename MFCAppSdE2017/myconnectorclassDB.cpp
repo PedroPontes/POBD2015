@@ -28,10 +28,17 @@ void myconnectorclassDB::connect()
 		AfxMessageBox(message);
 	}*/
 }
+CString myconnectorclassDB::rate(CString rating, CString username, CString roomID)
+{
+	CString query = _T("CALL rateRoom('") + rating + _T("','") + username + _T(",") + roomID + _T("')");
+	Query(query);
+	row = mysql_fetch_row(result);
+	CString value = CPtoUnicode(row[0], 1251);
+	return value;
+}
 
 std::vector<CString> myconnectorclassDB::getRoomInfo(CString roomID)
 {
-	CString value;
 	CString query = _T("CALL getRoomInfo('") + roomID + _T("')");
 
 	Query(query);
