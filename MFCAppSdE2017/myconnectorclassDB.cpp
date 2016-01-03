@@ -39,7 +39,7 @@ std::vector<CString> myconnectorclassDB::getRoomInfo(CString roomID)
 	std::vector<CString> roomInfo;
 
 	int line = 0;
-	int ncolumns = 15;
+	int ncolumns = 16;
 	for (int i = 0; i < ncolumns; i++)
 	{
 		roomInfo.push_back(CPtoUnicode(row[i], 1251));
@@ -113,7 +113,7 @@ CString myconnectorclassDB::Register(CString regName, CString regEmail, CString 
 }
 
 
-std::vector<LVITEM> myconnectorclassDB::GetUsers(CString adminCode)/////// MAIN SEARCH FUNCTION
+std::vector<LVITEM> myconnectorclassDB::GetUsers(CString adminCode)
 {
 	CString query = _T("CALL getUsers(")+adminCode+(")");
 	std::vector<LVITEM> admin_search_results;
@@ -159,31 +159,32 @@ std::vector<LVITEM> myconnectorclassDB::Search(CString sentence)/////// MAIN SEA
 
 	int line = 0;
 	int value_index = 0;
-	while ((row = mysql_fetch_row(result)) != NULL)
-	{
-		int column[] = { 3, 2 }; // column selection
-		int ncolumns = 2;
-		for (int i = 0; i < ncolumns; i++)
+	if (result != NULL){
+		while ((row = mysql_fetch_row(result)) != NULL)
 		{
-			query_disp_value[value_index] = CPtoUnicode(row[column[i]], 1251);
-			// Use the LV_ITEM structure to insert the items
-			LVITEM lvi;
-			// Insert the first item
-			lvi.mask = LVIF_TEXT;
-			lvi.iItem = line; // line where this result will be displayed
-			lvi.iSubItem = i; // column where this result will be displayed
-			int length = 1024;
-			LPWSTR pwsz = query_disp_value[value_index].GetBuffer(length);
-			// do something with the string that pwsz points to.
-			lvi.pszText = pwsz;
-			query_disp_value[value_index].ReleaseBuffer();
-			
-			search_results.push_back(lvi); // insert new structure in the vector
-			value_index++;
-		}
-		line++;
-	}
+			int column[] = { 3, 2, 0 }; // column selection
+			int ncolumns = 3; // number of columns to use
+			for (int i = 0; i < ncolumns; i++)
+			{
+				query_disp_value[value_index] = CPtoUnicode(row[column[i]], 1251);
+				// Use the LV_ITEM structure to insert the items
+				LVITEM lvi;
+				// Insert the first item
+				lvi.mask = LVIF_TEXT;
+				lvi.iItem = line; // line where this result will be displayed
+				lvi.iSubItem = i; // column where this result will be displayed
+				int length = 1024;
+				LPWSTR pwsz = query_disp_value[value_index].GetBuffer(length);
+				// do something with the string that pwsz points to.
+				lvi.pszText = pwsz;
+				query_disp_value[value_index].ReleaseBuffer();
 
+				search_results.push_back(lvi); // insert new structure in the vector
+				value_index++;
+			}
+			line++;
+		}
+	}
 	return search_results;
 }
 

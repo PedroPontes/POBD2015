@@ -69,6 +69,8 @@ CMFCAppSdE2017Dlg::CMFCAppSdE2017Dlg(CWnd* pParent /*=NULL*/)
 	, plugG(FALSE)
 	, plugB(FALSE)
 	, LoginStateMsg(_T("Logged in as Guest"))
+	, hour(_T("25")) // initialized with impossible values, just to make queries possible
+	, wday(_T("8"))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -229,8 +231,6 @@ HCURSOR CMFCAppSdE2017Dlg::OnQueryDragIcon()
 void CMFCAppSdE2017Dlg::OnBnClickedButtonquery()
 {
 	// TODO: Add your control notification handler code here
-	myconnectorclassDB MyConnection;
-	MyConnection.connect();
 	
 	// TRACKING FUNCTION PIECE //////////
 	float latitudeMaxF;
@@ -289,32 +289,41 @@ void CMFCAppSdE2017Dlg::OnBnClickedButtonquery()
 	sentence = isSmallQ + _T(",") + isMediumQ + _T(",") + isLargeQ + _T(",") + isOpenQ + _T(",") + hour + _T(",") + wday + _T(",") + minRate +
 		_T(",") + libraryQ + _T(",") + minPlugs + _T(",") + silentVQ + _T(",") + silentXQ + _T(",") + distONQ + _T(",") + latitudeMin + _T(",") +
 		latitudeMax + _T(",") + longitudeMin + _T(",") + longitudeMax;
+	myconnectorclassDB MyConnection;
+	MyConnection.connect();
 	std::vector<LVITEM> search_results = MyConnection.Search(sentence); // query and result
+	
 
 	// list control box update
 	UpdateData(TRUE);
 	m_roomListCtrl.DeleteAllItems();
-	bool first_item = TRUE;
-	for (int i = 0; i < search_results.size(); i++)
-	{
-		if (first_item){
-			m_roomListCtrl.InsertItem(&search_results[i]); // insert items in list control box
-		}
-		else{
-			m_roomListCtrl.SetItem(&search_results[i]); // set subitems in list control box
-		}
-		if (i < search_results.size() - 1){
-			if (search_results[i + 1].iSubItem > 0){
-				first_item = FALSE;
+	listRoomIDs.clear();
+	//if (search_results.empty()==FALSE){  // check for empty query results
+		bool first_item = TRUE;
+		for (int i = 0; i < search_results.size(); i++)
+		{
+			if (first_item){
+				m_roomListCtrl.InsertItem(&search_results[i]); // insert items in list control box
+			}
+			else if (search_results[i].iSubItem == 2){
+				listRoomIDs.push_back(search_results[i].pszText);
 			}
 			else{
-				first_item = TRUE;
+				m_roomListCtrl.SetItem(&search_results[i]); // set subitems in list control box
+			}
+			if (i < search_results.size() - 1){
+				if (search_results[i + 1].iSubItem > 0){
+					first_item = FALSE;
+				}
+				else{
+					first_item = TRUE;
+				}
 			}
 		}
-		
-	}
+	//}
 	UpdateData(FALSE);
 }
+
 
 
 void CMFCAppSdE2017Dlg::Librarybutton()
@@ -487,11 +496,20 @@ void CMFCAppSdE2017Dlg::OnHdnItemdblclickroomlist(NMHDR *pNMHDR, LRESULT *pResul
 void CMFCAppSdE2017Dlg::OnNMDblclkroomlist(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
-	// TODO: Add your control notification handler code here
-	/*myconnectorclassDB MyConnection;
+	// new connection and query to get detailed room info
+	
+	int row = m_roomListCtrl.GetSelectionMark();
+	//int column = 1; // (hidden) column where roomIDs are stored
+	//CString roomID = m_roomListCtrl.GetItemText(row, column);
+	CString roomID = listRoomIDs[row];
+	myconnectorclassDB MyConnection;
 	MyConnection.connect();
-	std::vector<CString> roomInfo = MyConnection.getRoomInfo(roomID);*/
+	std::vector<CString> roomInfo = MyConnection.getRoomInfo(roomID);
+	// new window with room details
 	CRoomInfo room;
+	room.SetRoomID(&roomID);
+	room.SetRoomInfo(&roomInfo);
+	room.SetUsername(&username);
 	room.DoModal();
 	*pResult = 0;
 }

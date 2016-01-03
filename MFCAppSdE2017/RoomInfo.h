@@ -1,4 +1,5 @@
 #pragma once
+#include "afxwin.h"
 
 
 // CRoomInfo dialog
@@ -34,5 +35,13 @@ public:
 	CString longInfo;
 	CString newRating;
 	CString floorInfo;
-	CString openInfo;
+	CString schedule_info;
+	CString roomID;
+	void SetRoomID(CString* room_id_ptr);
+	std::vector<CString> roomInfo;
+	void SetRoomInfo(std::vector<CString>* room_info_ptr);
+	CString username;
+	void SetUsername(CString* user_ptr);
+	// detailed schedule information
+	
 };
