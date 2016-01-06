@@ -189,8 +189,8 @@ void CADMIN::OnBnClickedAddstudyroom()
 			_SRlday = _T("6");
 		}
 		else{
-			_SRfday = SRopen;
-			_SRlday = SRclose;
+			_SRfday = SRfday;
+			_SRlday = SRlday;
 		}
 		CString _SRPlugs;
 		_SRPlugs.Format(_T("%.1f"), _ttof(SRPlugs) * 10);
