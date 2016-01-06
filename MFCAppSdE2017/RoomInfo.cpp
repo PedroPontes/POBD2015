@@ -112,7 +112,7 @@ void CRoomInfo::SetRoomInfo(std::vector<CString>* room_info_ptr){
 
 	nameInfo = room_info_ptr->at(0);
 	chairsInfo = room_info_ptr->at(1);
-	plugInfo = room_info_ptr->at(2); 
+	plugInfo.Format(_T("%.1f"), _ttof(room_info_ptr->at(2))/10); 
 	typeInfo = room_info_ptr->at(3);
 	
 	if (room_info_ptr->at(4) == "0") libraryInfo = _T("No");
@@ -131,22 +131,32 @@ void CRoomInfo::SetRoomInfo(std::vector<CString>* room_info_ptr){
 	std::vector<CString> Day;
 	CString sHour = room_info_ptr->at(14);
 	CString cHour = room_info_ptr->at(15);
-	for (int i = 12; i < 14; i++){
-		if (room_info_ptr->at(i).Compare(_T("0"))) Day.push_back(_T("Sunday"));
-		else if (room_info_ptr->at(i).Compare(_T("1"))) Day.push_back(_T("Monday"));
-		else if (room_info_ptr->at(i).Compare(_T("2"))) Day.push_back(_T("Tuesday"));
-		else if (room_info_ptr->at(i).Compare(_T("3"))) Day.push_back(_T("Wednesday"));
-		else if (room_info_ptr->at(i).Compare(_T("4"))) Day.push_back(_T("Thursday"));
-		else if (room_info_ptr->at(i).Compare(_T("5"))) Day.push_back(_T("Friday"));
-		else if (room_info_ptr->at(i).Compare(_T("6"))) Day.push_back(_T("Saturday"));
+	int opening_index = 12;
+	int closing_index = 13;
+	for (int i = opening_index; i <= closing_index; i++){
+		if (room_info_ptr->at(i) == "0") { Day.push_back(_T("Sunday")); }
+		else if (room_info_ptr->at(i) == "1") { Day.push_back(_T("Monday")); }
+		else if (room_info_ptr->at(i) == "2") { Day.push_back(_T("Tuesday")); }
+		else if (room_info_ptr->at(i) == "3") { Day.push_back(_T("Wednesday")); }
+		else if (room_info_ptr->at(i) == "4") { Day.push_back(_T("Thursday")); }
+		else if (room_info_ptr->at(i) == "5") { Day.push_back(_T("Friday")); }
+		else if (room_info_ptr->at(i) == "6") { Day.push_back(_T("Saturday")); }
 	}
-	if (Day[0] == Day[1]){
+	if (Day.size() < 2){  // to ensure there is no error while trying to display the opening days
+		schedule_info = _T("Unavailable");
+	}
+	else if (Day[0]==Day[1]){
 		schedule_info = _T("Open on ") + Day[0]
 			+ _T(", from ") + sHour + _T(":00 to ") + cHour + _T(":00");
 	}
 	else{
-		schedule_info = _T("Open from ") + Day[0] + _T(" to ") + Day[1]
-			+ _T(", from ") + sHour + _T(":00 to ") + cHour + _T(":00");
+		if (Day[0] == "Sunday" && Day[1]=="Saturday"){  // every day
+			schedule_info = _T("Open every day, from ") + sHour + _T(":00 to ") + cHour + _T(":00");
+		}
+		else{
+			schedule_info = _T("Open from ") + Day[0] + _T(" to ") + Day[1]
+				+ _T(", from ") + sHour + _T(":00 to ") + cHour + _T(":00");
+		}
 	}
 }
 

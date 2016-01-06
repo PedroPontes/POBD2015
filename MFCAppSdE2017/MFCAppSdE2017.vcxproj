@@ -81,7 +81,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Vasco\Documents\Visual Studio 2013\MySQLConnector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Vasco\Documents\Visual Studio 2013\MySQLConnector\include;C:\Users\Vasco\Documents\Projecto POBD\POBD2015\POBD2015\Release;C:\Users\Vasco\Documents\Projecto POBD\POBD2015\POBD2015\MFCAppSdE2017\Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -137,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Desktop\POBD\MFCAppSdE2017\MFCAppSdE2017\res\Icon.ico" />
+    <Image Include="res\Icon.ico" />
     <Image Include="res\MFCAppSdE2017.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

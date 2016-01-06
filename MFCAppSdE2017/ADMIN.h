@@ -65,4 +65,6 @@ public:
 	CString SRclose;
 	CString SRfday;
 	CString SRlday;
+	// button for checking "Every Day" option in "Add a new studyroom" section
+	BOOL check_everyday;
 };

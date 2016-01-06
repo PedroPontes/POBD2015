@@ -33,6 +33,7 @@ CADMIN::CADMIN(CWnd* pParent /*=NULL*/)
 	, SRclose(_T(""))
 	, SRfday(_T(""))
 	, SRlday(_T(""))
+	, check_everyday(FALSE)
 {
 
 }
@@ -62,6 +63,7 @@ void CADMIN::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_closeEDIT, SRclose);
 	DDX_Text(pDX, IDC_fDayEDIT, SRfday);
 	DDX_Text(pDX, IDC_lDayEDIT, SRlday);
+	DDX_Check(pDX, IDC_CHECKeveryday, check_everyday);
 }
 
 
@@ -180,11 +182,23 @@ void CADMIN::OnBnClickedAddstudyroom()
 		AfxMessageBox(message);
 	}
 	else{
+		CString _SRfday;
+		CString _SRlday;
+		if (check_everyday){
+			_SRfday = _T("0");
+			_SRlday = _T("6");
+		}
+		else{
+			_SRfday = SRopen;
+			_SRlday = SRclose;
+		}
+		CString _SRPlugs;
+		_SRPlugs.Format(_T("%.1f"), _ttof(SRPlugs) * 10);
 		myconnectorclassDB MyConnection;
 		MyConnection.connect();
 		UpdateData(TRUE);
-		CString retStudy = MyConnection.addStudyroom(SRName,SRbuilding,SRChairs,SRPlugs,SRFloor,SRNoise,SRBibl,SRopen,SRclose,
-			SRfday,SRlday);
+		CString retStudy = MyConnection.addStudyroom(SRName,SRbuilding,SRChairs,_SRPlugs,SRFloor,SRNoise,SRBibl,SRopen,SRclose,
+			_SRfday,_SRlday);
 		BOOL aux = 1;
 		// The command mysql_real_connect is included in the libraries
 		
