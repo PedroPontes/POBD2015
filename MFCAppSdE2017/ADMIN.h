@@ -67,4 +67,5 @@ public:
 	CString SRlday;
 	// button for checking "Every Day" option in "Add a new studyroom" section
 	BOOL check_everyday;
+	BOOL user_list_created; // auxiliary variable to check if user list was created
 };

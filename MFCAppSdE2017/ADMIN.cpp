@@ -34,6 +34,7 @@ CADMIN::CADMIN(CWnd* pParent /*=NULL*/)
 	, SRfday(_T(""))
 	, SRlday(_T(""))
 	, check_everyday(FALSE)
+	, user_list_created(FALSE)
 {
 
 }
@@ -277,12 +278,17 @@ void CADMIN::OnBnClickedButtonrefresh()
 {
 	// TODO: Add your control notification handler code here
 	// user control list column initialization
-	CRect rect;
-	m_userListCtrl.GetClientRect(&rect);
-	int nColInterval = rect.Width() / 9; // column width
-	m_userListCtrl.InsertColumn(0, _T("ID"), LVCFMT_LEFT, nColInterval);
-	m_userListCtrl.InsertColumn(1, _T("Username"), LVCFMT_LEFT, nColInterval * 3);
-	m_userListCtrl.InsertColumn(2, _T("Email"), LVCFMT_LEFT, nColInterval * 4);
+	if (!user_list_created){
+		UpdateData(TRUE);
+		CRect rect;
+		m_userListCtrl.GetClientRect(&rect);
+		int nColInterval = rect.Width() / 9; // column width
+		m_userListCtrl.InsertColumn(0, _T("ID"), LVCFMT_LEFT, nColInterval);
+		m_userListCtrl.InsertColumn(1, _T("Username"), LVCFMT_LEFT, nColInterval * 3);
+		m_userListCtrl.InsertColumn(2, _T("Email"), LVCFMT_LEFT, nColInterval * 4);
+		UpdateData(FALSE);
+		user_list_created = TRUE;
+	}
 	// call getUsers()
 	myconnectorclassDB MyAdminConnection;
 	MyAdminConnection.connect();
